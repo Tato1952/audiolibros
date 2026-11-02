@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Audiolibros">
-<meta name="theme-color" content="#14110f">
+<meta name="theme-color" content="#12100e">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-180.png">
@@ -15,57 +15,103 @@
 <style>
 /* ===================== COLORES Y BASE ===================== */
 :root{
-  --fondo:#14110f; --panel:#1f1a17; --panel2:#2b2420; --linea:#3a312b;
-  --texto:#f3ece4; --suave:#a89b8e; --acento:#e8a33d; --acento2:#b8661f; --peligro:#e05a4f;
+  --fondo:#12100e; --panel:#1d1916; --panel2:#29231f; --linea:#3a322c;
+  --texto:#f5eee6; --suave:#a3968a; --acento:#eaa53e; --acento2:#b8661f; --peligro:#e05a4f; --verde:#4caf7a;
+  --serif: ui-serif, "New York", "Iowan Old Style", Georgia, serif;
+  --fondo-img: linear-gradient(135deg,#8a4b1c,#2a1a0f);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--fondo);color:var(--texto);
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif}
-body{min-height:100vh;padding-bottom:calc(96px + env(safe-area-inset-bottom));
-  -webkit-user-select:none;user-select:none}
+body{min-height:100vh;padding-bottom:calc(100px + env(safe-area-inset-bottom));-webkit-user-select:none;user-select:none}
+body.bloqueado{overflow:hidden}
 button{font:inherit;color:inherit;cursor:pointer}
 button:disabled{opacity:.3}
-input[type=text]{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--linea);
-  background:var(--panel2);color:var(--texto);font-size:16px;-webkit-user-select:text;user-select:text}
+input[type=text],input[type=search]{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--linea);
+  background:var(--panel2);color:var(--texto);font-size:16px;-webkit-user-select:text;user-select:text;outline:none}
+#app{max-width:980px;margin:0 auto}
 
 /* ===================== CABECERA ===================== */
-header{position:sticky;top:0;z-index:5;background:rgba(20,17,15,.92);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+header{position:sticky;top:0;z-index:5;background:rgba(18,16,14,.88);
+  backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);
   padding:calc(env(safe-area-inset-top) + 14px) 18px 12px;display:flex;align-items:center;gap:12px}
-header .titulos{flex:1}
-header h1{font-size:30px;margin:0;font-weight:800;letter-spacing:-.6px}
-#espacio{font-size:12px;color:var(--suave);margin-top:2px}
-.btn-mas{width:46px;height:46px;border-radius:50%;border:0;background:var(--acento);color:#1a1209;
-  font-size:28px;font-weight:700;line-height:1;display:grid;place-items:center;box-shadow:0 4px 14px rgba(232,163,61,.35)}
+header .titulos{flex:1;min-width:0}
+header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;letter-spacing:-.4px}
+#estadis{font-size:12px;color:var(--suave);margin-top:3px}
+.btn-mas{width:46px;height:46px;border-radius:50%;border:0;background:var(--acento);color:#1a1209;flex:none;
+  font-size:28px;font-weight:700;line-height:1;display:grid;place-items:center;box-shadow:0 6px 18px rgba(234,165,62,.35)}
+
+/* ===================== CONTINUAR ESCUCHANDO ===================== */
+#continuar{margin:6px 16px 22px;border-radius:22px;overflow:hidden;position:relative;cursor:pointer;
+  box-shadow:0 16px 40px rgba(0,0,0,.5);display:none}
+.hero-fondo{position:absolute;inset:-50px;background:var(--fondo-img) center/cover;
+  filter:blur(34px) brightness(.5) saturate(1.3)}
+.hero{position:relative;display:flex;gap:16px;padding:16px;align-items:center}
+.hero .tapa{width:108px;height:108px;border-radius:12px;overflow:hidden;flex:none;box-shadow:0 10px 26px rgba(0,0,0,.55)}
+.hero .tapa > *{width:100%;height:100%}
+.hero .txt{flex:1;min-width:0}
+.etq{font-size:11px;letter-spacing:1.3px;font-weight:800;color:var(--acento);text-transform:uppercase}
+.hero .tit{font-family:var(--serif);font-size:21px;font-weight:700;line-height:1.15;margin-top:4px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hero .aut{font-size:13px;color:rgba(255,255,255,.72);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#heroInfo{font-size:12px;color:rgba(255,255,255,.78);margin-top:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero .barra{background:rgba(255,255,255,.2);margin-top:7px}
+#heroPlay{width:58px;height:58px;border-radius:50%;background:var(--acento);color:#1a1209;flex:none;border:0;
+  display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.4)}
+#heroPlay svg{width:28px;height:28px;fill:currentColor}
+
+/* ===================== BUSCADOR Y FILTROS ===================== */
+.herr{padding:0 16px;display:flex;flex-direction:column;gap:12px;margin-bottom:4px}
+.caja-busca{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--linea);border-radius:12px;padding:0 12px}
+.caja-busca svg{width:18px;height:18px;fill:var(--suave);flex:none}
+.caja-busca input{border:0;background:none;padding:11px 0;border-radius:0}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{border:1px solid var(--linea);background:var(--panel);border-radius:20px;padding:7px 15px;font-size:14px;white-space:nowrap;color:var(--suave)}
+.chip.on{background:var(--texto);color:var(--fondo);border-color:var(--texto);font-weight:700}
+.seccion{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--suave);margin:18px 16px 12px;font-weight:800}
 
 /* ===================== BIBLIOTECA ===================== */
-#biblioteca{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px;padding:6px 16px 24px}
-.libro{background:var(--panel);border-radius:14px;overflow:hidden;position:relative;transition:transform .15s}
-.libro:active{transform:scale(.97)}
-.portada{aspect-ratio:1;width:100%;object-fit:cover;display:block}
-.placeholder{display:grid;place-items:center;font-weight:800;color:#1a1209;
-  background:linear-gradient(135deg,var(--acento),var(--acento2) 60%,#5a2e10)}
-.portada.placeholder{font-size:44px}
-.libro .info{padding:9px 10px 11px}
-.libro .tit{font-weight:700;font-size:14px;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;
+#biblioteca{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:22px 16px;padding:0 16px 24px}
+.libro{position:relative;cursor:pointer;transition:transform .15s}
+.libro:active{transform:scale(.96)}
+.libro .tapa{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:1;box-shadow:0 10px 24px rgba(0,0,0,.5)}
+.libro .tapa > .portada{width:100%;height:100%}
+.libro.actual .tapa::after{content:'';position:absolute;inset:0;border:3px solid var(--acento);border-radius:12px}
+.libro .tit{font-weight:700;font-size:14px;line-height:1.25;margin-top:10px;display:-webkit-box;-webkit-line-clamp:2;
   -webkit-box-orient:vertical;overflow:hidden}
-.libro .aut{font-size:12px;color:var(--suave);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.barra{height:4px;background:var(--panel2);border-radius:2px;margin-top:9px;overflow:hidden}
-.barra>div{height:100%;background:var(--acento);border-radius:2px}
+.libro .aut{font-size:12px;color:var(--suave);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.barra{height:4px;background:var(--panel2);border-radius:2px;margin-top:8px;overflow:hidden}
+.barra>div{height:100%;background:var(--acento);border-radius:2px;transition:width .4s}
 .pct{font-size:11px;color:var(--suave);margin-top:5px}
+.insignia{position:absolute;left:8px;top:8px;background:var(--acento);color:#1a1209;font-size:10px;font-weight:800;
+  padding:3px 7px;border-radius:6px;letter-spacing:.6px;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.insignia.fin{background:var(--verde);color:#fff}
 .libro .mas{position:absolute;top:6px;right:6px;width:34px;height:34px;border-radius:50%;border:0;
-  background:rgba(0,0,0,.55);color:#fff;font-size:18px;line-height:1}
-.libro.actual{outline:2px solid var(--acento)}
-.vacio{grid-column:1/-1;text-align:center;color:var(--suave);padding:70px 24px;line-height:1.6;font-size:16px}
-.vacio .grande{font-size:60px;display:block;margin-bottom:10px}
+  background:rgba(0,0,0,.55);color:#fff;font-size:18px;line-height:1;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.vacio{grid-column:1/-1;text-align:center;color:var(--suave);padding:60px 24px;line-height:1.6;font-size:16px}
+.vacio .grande{font-size:64px;display:block;margin-bottom:10px}
+
+/* portada sin imagen: parece la tapa de un libro */
+.portada{object-fit:cover;display:block}
+.placeholder{display:flex;flex-direction:column;justify-content:space-between;padding:12%;color:#fff5e6;
+  background:linear-gradient(150deg,#d38a35,#9a4f1a 55%,#4a230c);position:relative}
+.placeholder::before{content:'';position:absolute;left:7%;top:0;bottom:0;width:3px;background:rgba(0,0,0,.18)}
+.placeholder .ph-tit{font-family:var(--serif);font-weight:700;font-size:clamp(13px,1.15em,22px);line-height:1.15;
+  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.placeholder .ph-aut{font-size:.7em;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.placeholder.ini{align-items:center;justify-content:center;padding:0;font-family:var(--serif);font-weight:700;font-size:18px}
+.placeholder.ini::before{display:none}
 
 /* ===================== MINI REPRODUCTOR ===================== */
-#mini{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));
-  background:var(--panel2);border-radius:16px;display:none;align-items:center;gap:12px;padding:8px 10px 8px 8px;
-  box-shadow:0 8px 28px rgba(0,0,0,.55);z-index:6;overflow:hidden}
+#mini{position:fixed;left:50%;bottom:calc(10px + env(safe-area-inset-bottom));width:calc(100% - 20px);max-width:620px;
+  background:rgba(41,35,31,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-radius:16px;display:flex;align-items:center;gap:12px;padding:8px 10px 8px 8px;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);z-index:6;overflow:hidden;
+  transform:translate(-50%,160%);transition:transform .3s}
+#mini.visible{transform:translate(-50%,0)}
 #miniImg{width:48px;height:48px;border-radius:9px;overflow:hidden;flex:none}
-#miniImg .portada{width:48px;height:48px}
-#miniImg .placeholder{font-size:18px}
+#miniImg > *{width:48px;height:48px}
 #miniTxt{flex:1;min-width:0}
 #miniTit{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #miniCap{font-size:12px;color:var(--suave);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -74,95 +120,147 @@ header h1{font-size:30px;margin:0;font-weight:800;letter-spacing:-.6px}
 .btn-icono svg{width:28px;height:28px;fill:currentColor}
 
 /* ===================== REPRODUCTOR GRANDE ===================== */
-#reproductor{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;
-  background:linear-gradient(180deg,#3a2614 0%,#1c1511 45%,var(--fondo) 100%);
-  padding:calc(env(safe-area-inset-top) + 6px) 26px calc(env(safe-area-inset-bottom) + 18px);
-  transform:translateY(105%);transition:transform .32s cubic-bezier(.2,.8,.2,1);overflow-y:auto}
+#reproductor{position:fixed;inset:0;z-index:10;background:var(--fondo);
+  transform:translateY(105%);transition:transform .35s cubic-bezier(.2,.8,.2,1);overflow-y:auto}
 #reproductor.abierto{transform:none}
+#reproductor::before{content:'';position:fixed;inset:-80px;background:var(--fondo-img) center/cover;
+  filter:blur(45px) brightness(.45) saturate(1.4);transition:background .5s}
+#reproductor::after{content:'';position:fixed;inset:0;
+  background:linear-gradient(180deg,rgba(18,16,14,.15) 0%,rgba(18,16,14,.55) 55%,rgba(18,16,14,.92) 100%)}
+.rep-contenido{position:relative;z-index:1;max-width:460px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;
+  padding:calc(env(safe-area-inset-top) + 6px) 26px calc(env(safe-area-inset-bottom) + 20px)}
 .rep-arriba{display:flex;align-items:center;justify-content:space-between;height:48px}
-.rep-arriba button{border:0;background:rgba(255,255,255,.08);border-radius:20px;padding:8px 14px;font-size:15px}
-#btnCerrarRep{font-size:22px;padding:4px 14px}
-#repPortada{width:min(78vw,340px,42vh);aspect-ratio:1;margin:14px auto 22px;border-radius:14px;overflow:hidden;
-  box-shadow:0 18px 50px rgba(0,0,0,.6);flex:none}
-#repPortada .grande{width:100%;height:100%;object-fit:cover;display:block}
-#repPortada .placeholder{font-size:90px;height:100%;width:100%;display:grid}
-#repTitulo{font-size:22px;font-weight:800;text-align:center;line-height:1.2}
-#repAutor{font-size:16px;color:var(--acento);text-align:center;margin-top:4px}
-#repCap{font-size:14px;color:var(--suave);text-align:center;margin-top:8px;min-height:18px}
+.rep-arriba button{border:0;background:rgba(255,255,255,.12);border-radius:20px;padding:8px 14px;font-size:15px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#btnCerrarRep{width:44px;height:36px;padding:0;display:grid;place-items:center}
+#btnCerrarRep svg{width:22px;height:22px;fill:currentColor}
+#repPortada{width:min(80vw,340px,40vh);aspect-ratio:1;margin:18px auto 26px;border-radius:16px;overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.7);flex:none;transition:transform .35s}
+#repPortada.pausado{transform:scale(.9)}
+#repPortada > *{width:100%;height:100%}
+#repPortada .placeholder{font-size:26px}
+#repTitulo{font-family:var(--serif);font-size:25px;font-weight:700;text-align:center;line-height:1.2}
+#repAutor{font-size:16px;color:var(--acento);text-align:center;margin-top:5px}
+#repCap{font-size:14px;color:rgba(255,255,255,.65);text-align:center;margin-top:8px;min-height:18px}
 
-/* barra de avance */
-#slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;margin:26px 0 8px;outline:none;
-  background:linear-gradient(90deg,var(--acento) var(--p,0%),var(--linea) var(--p,0%))}
-#slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--texto);
-  box-shadow:0 2px 6px rgba(0,0,0,.5)}
-.tiempos{display:flex;justify-content:space-between;font-size:13px;color:var(--suave);font-variant-numeric:tabular-nums}
-#repTotal{text-align:center;font-size:12px;color:var(--suave);margin-top:6px}
+#slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;margin:28px 0 9px;outline:none;
+  background:linear-gradient(90deg,var(--acento) var(--p,0%),rgba(255,255,255,.18) var(--p,0%))}
+#slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.5)}
+#slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:0}
+.tiempos{display:flex;justify-content:space-between;font-size:13px;color:rgba(255,255,255,.65);font-variant-numeric:tabular-nums}
+#repTotal{text-align:center;font-size:12px;color:rgba(255,255,255,.6);margin-top:8px}
 
-/* botones grandes */
-.controles{display:flex;align-items:center;justify-content:space-between;margin:22px 0 10px}
+.controles{display:flex;align-items:center;justify-content:space-between;margin:24px 0 10px}
 .controles .btn-icono svg{width:30px;height:30px}
-.salto{position:relative;width:58px;height:58px}
-.salto svg{width:44px!important;height:44px!important}
+.salto{position:relative;width:60px;height:60px}
+.salto svg{width:46px!important;height:46px!important}
 .salto span{position:absolute;inset:0;display:grid;place-items:center;font-size:12px;font-weight:800;padding-top:3px}
-#btnPlay{width:82px;height:82px;border-radius:50%;background:var(--acento);color:#1a1209;
-  box-shadow:0 8px 26px rgba(232,163,61,.4)}
+#btnPlay{width:84px;height:84px;border-radius:50%;background:var(--acento);color:#1a1209;box-shadow:0 10px 30px rgba(234,165,62,.45)}
 #btnPlay svg{width:40px;height:40px}
-.extras{display:flex;justify-content:space-around;margin-top:auto;padding-top:16px}
-.extras button{border:0;background:rgba(255,255,255,.08);border-radius:22px;padding:10px 16px;font-size:15px;min-width:96px}
+.extras{display:flex;justify-content:center;gap:12px;margin-top:auto;padding-top:20px}
+.extras button{border:0;background:rgba(255,255,255,.12);border-radius:22px;padding:10px 16px;font-size:15px;min-width:96px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .extras button.activo{background:var(--acento);color:#1a1209;font-weight:700}
 
 /* ===================== HOJAS (ventanas que suben) ===================== */
-.hoja{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;
+.hoja{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center;
   opacity:0;pointer-events:none;transition:opacity .25s}
 .hoja.abierta{opacity:1;pointer-events:auto}
-.hoja .panel{width:100%;max-height:88vh;overflow-y:auto;background:var(--panel);border-radius:20px 20px 0 0;
+#hojaCaratula{z-index:25}
+.hoja .panel{width:100%;max-width:620px;max-height:90vh;overflow-y:auto;background:var(--panel);border-radius:22px 22px 0 0;
   padding:10px 20px calc(env(safe-area-inset-bottom) + 20px);transform:translateY(100%);transition:transform .3s}
 .hoja.abierta .panel{transform:none}
 .asa{width:40px;height:5px;border-radius:3px;background:var(--linea);margin:0 auto 14px}
-.hoja h2{margin:0 0 16px;font-size:20px}
+.hoja h2{margin:0 0 16px;font-size:21px;font-family:var(--serif)}
 .campo{margin-bottom:14px}
-.campo label{display:block;font-size:13px;color:var(--suave);margin-bottom:6px}
+.campo > label{display:block;font-size:13px;color:var(--suave);margin-bottom:6px}
 .btn-ancho{display:block;width:100%;border:0;border-radius:12px;padding:14px;font-size:16px;font-weight:600;
   background:var(--panel2);margin-top:10px;text-align:center}
 .btn-ancho.prin{background:var(--acento);color:#1a1209}
 .btn-ancho.peligro{color:var(--peligro)}
 .elegir{display:flex;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--linea);
-  border-radius:12px;padding:16px;color:var(--acento);font-weight:600;text-align:center}
+  border-radius:12px;padding:14px;color:var(--acento);font-weight:600;text-align:center;cursor:pointer;background:none;font-size:15px}
 .elegir input{display:none}
 #listaNuevos{font-size:12px;color:var(--suave);margin-top:8px;line-height:1.4;max-height:90px;overflow-y:auto}
-.prev-portada{display:flex;gap:12px;align-items:center}
-.prev-portada .caja{width:70px;height:70px;border-radius:10px;overflow:hidden;background:var(--panel2);flex:none}
+.prev-portada{display:flex;gap:12px;align-items:stretch}
+.prev-portada .caja{width:96px;height:96px;border-radius:12px;overflow:hidden;background:var(--panel2);flex:none;
+  display:grid;place-items:center;color:var(--suave);font-size:30px}
 .prev-portada .caja img{width:100%;height:100%;object-fit:cover}
-.prev-portada .elegir{flex:1}
+.prev-portada .botones{flex:1;display:flex;flex-direction:column;gap:8px}
+.prev-portada .elegir{flex:1;padding:8px}
 .opcion{display:flex;align-items:center;justify-content:space-between;width:100%;border:0;background:none;
   padding:14px 4px;border-bottom:1px solid var(--linea);font-size:16px;text-align:left;gap:10px}
 .opcion small{color:var(--suave);font-variant-numeric:tabular-nums;flex:none}
 .opcion.actual{color:var(--acento);font-weight:700}
 .opcion .nom{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* ===================== AVISO DE CARGA ===================== */
-#cargando{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.75);display:none;place-items:center;padding:30px}
-#cargando .caja{background:var(--panel);border-radius:16px;padding:26px;text-align:center;max-width:320px;width:100%}
+/* buscador de carátulas */
+.busca-fila{display:flex;gap:8px}
+.btn-buscar{border:0;border-radius:12px;background:var(--acento);color:#1a1209;font-weight:700;padding:0 16px;flex:none}
+#estadoCaratula{font-size:13px;color:var(--suave);margin:12px 0;min-height:18px}
+#gridCaratulas{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:12px}
+.res-car{border:0;background:var(--panel2);border-radius:10px;padding:0;overflow:hidden;position:relative}
+.res-car img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+.res-car span{position:absolute;left:4px;bottom:4px;font-size:9px;background:rgba(0,0,0,.7);color:#fff;padding:2px 5px;border-radius:4px}
+
+/* ===================== AVISOS ===================== */
+#cargando{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.75);display:none;place-items:center;padding:30px}
+#cargando .caja{background:var(--panel);border-radius:18px;padding:26px;text-align:center;max-width:320px;width:100%}
 #cargandoTxt{white-space:pre-line;font-size:14px;color:var(--suave);margin-top:14px;word-break:break-word}
 .rueda{width:40px;height:40px;border-radius:50%;border:4px solid var(--linea);border-top-color:var(--acento);
   margin:0 auto;animation:gira 1s linear infinite}
 @keyframes gira{to{transform:rotate(360deg)}}
+#aviso{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 12px);transform:translate(-50%,-300%);z-index:50;
+  background:var(--texto);color:var(--fondo);padding:10px 18px;border-radius:22px;font-size:14px;font-weight:600;
+  box-shadow:0 8px 24px rgba(0,0,0,.4);transition:transform .3s,visibility .3s;max-width:90vw;text-align:center;visibility:hidden}
+#aviso.visible{transform:translate(-50%,0);visibility:visible}
 </style>
 </head>
 <body>
+<div id="app">
+  <!-- ===================== CABECERA ===================== -->
+  <header>
+    <div class="titulos">
+      <h1>Mis Audiolibros</h1>
+      <div id="estadis"></div>
+    </div>
+    <button class="btn-mas" id="btnNuevo" aria-label="Añadir audiolibro">+</button>
+  </header>
 
-<!-- ===================== PANTALLA PRINCIPAL ===================== -->
-<header>
-  <div class="titulos">
-    <h1>Audiolibros</h1>
-    <div id="espacio"></div>
+  <!-- ===================== CONTINUAR ESCUCHANDO ===================== -->
+  <section id="continuar">
+    <div class="hero-fondo" id="heroFondo"></div>
+    <div class="hero">
+      <div class="tapa" id="heroTapa"></div>
+      <div class="txt">
+        <div class="etq">Continuar escuchando</div>
+        <div class="tit" id="heroTit"></div>
+        <div class="aut" id="heroAut"></div>
+        <div id="heroInfo"></div>
+        <div class="barra"><div id="heroBarra"></div></div>
+      </div>
+      <button id="heroPlay" aria-label="Reproducir"></button>
+    </div>
+  </section>
+
+  <!-- ===================== BUSCADOR Y FILTROS ===================== -->
+  <div class="herr" id="herr">
+    <div class="caja-busca">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 14 15.5l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg>
+      <input type="search" id="buscar" placeholder="Buscar por título o autor">
+    </div>
+    <div class="chips" id="chips">
+      <button class="chip on" data-f="todos">Todos</button>
+      <button class="chip" data-f="curso">Escuchando</button>
+      <button class="chip" data-f="nuevos">Sin empezar</button>
+      <button class="chip" data-f="fin">Terminados</button>
+    </div>
   </div>
-  <button class="btn-mas" id="btnNuevo" aria-label="Añadir audiolibro">+</button>
-</header>
+  <div class="seccion" id="tituloSeccion">Mi biblioteca</div>
+  <main id="biblioteca"></main>
+</div>
 
-<main id="biblioteca"></main>
-
-<!-- Mini reproductor (abajo, mientras ves la biblioteca) -->
+<!-- Mini reproductor -->
 <div id="mini">
   <div id="miniImg"></div>
   <div id="miniTxt"><div id="miniTit"></div><div id="miniCap"></div></div>
@@ -172,34 +270,36 @@ header h1{font-size:30px;margin:0;font-weight:800;letter-spacing:-.6px}
 
 <!-- ===================== REPRODUCTOR ===================== -->
 <section id="reproductor">
-  <div class="rep-arriba">
-    <button id="btnCerrarRep" aria-label="Cerrar">⌄</button>
-    <button id="btnCapitulos">☰ Capítulos</button>
-  </div>
-  <div id="repPortada"></div>
-  <div id="repTitulo"></div>
-  <div id="repAutor"></div>
-  <div id="repCap"></div>
+  <div class="rep-contenido">
+    <div class="rep-arriba">
+      <button id="btnCerrarRep" aria-label="Cerrar"><svg viewBox="0 0 24 24"><path d="M7.4 8.6 12 13.2l4.6-4.6L18 10l-6 6-6-6z"/></svg></button>
+      <button id="btnCapitulos">☰ Capítulos</button>
+    </div>
+    <div id="repPortada" class="pausado"></div>
+    <div id="repTitulo"></div>
+    <div id="repAutor"></div>
+    <div id="repCap"></div>
 
-  <input type="range" id="slider" min="0" max="1" step="1" value="0">
-  <div class="tiempos"><span id="tAct">0:00</span><span id="tRest">-0:00</span></div>
-  <div id="repTotal"></div>
+    <input type="range" id="slider" min="0" max="1" step="1" value="0">
+    <div class="tiempos"><span id="tAct">0:00</span><span id="tRest">-0:00</span></div>
+    <div id="repTotal"></div>
 
-  <div class="controles">
-    <button class="btn-icono" id="btnAnt" aria-label="Capítulo anterior">
-      <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg></button>
-    <button class="btn-icono salto" id="btnAtras" aria-label="Atrás 15 segundos">
-      <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg><span>15</span></button>
-    <button class="btn-icono" id="btnPlay" aria-label="Reproducir"></button>
-    <button class="btn-icono salto" id="btnAdelante" aria-label="Adelante 30 segundos">
-      <svg viewBox="0 0 24 24"><path d="M12 5V1l5 5-5 5V7a6 6 0 1 0 6 6h2a8 8 0 1 1-8-8z"/></svg><span>30</span></button>
-    <button class="btn-icono" id="btnSig" aria-label="Capítulo siguiente">
-      <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
-  </div>
+    <div class="controles">
+      <button class="btn-icono" id="btnAnt" aria-label="Capítulo anterior">
+        <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg></button>
+      <button class="btn-icono salto" id="btnAtras" aria-label="Atrás 15 segundos">
+        <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg><span>15</span></button>
+      <button class="btn-icono" id="btnPlay" aria-label="Reproducir"></button>
+      <button class="btn-icono salto" id="btnAdelante" aria-label="Adelante 30 segundos">
+        <svg viewBox="0 0 24 24"><path d="M12 5V1l5 5-5 5V7a6 6 0 1 0 6 6h2a8 8 0 1 1-8-8z"/></svg><span>30</span></button>
+      <button class="btn-icono" id="btnSig" aria-label="Capítulo siguiente">
+        <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
+    </div>
 
-  <div class="extras">
-    <button id="btnVel">1×</button>
-    <button id="btnDormir">🌙 Dormir</button>
+    <div class="extras">
+      <button id="btnVel">1×</button>
+      <button id="btnDormir">🌙 Dormir</button>
+    </div>
   </div>
 </section>
 
@@ -215,10 +315,13 @@ header h1{font-size:30px;margin:0;font-weight:800;letter-spacing:-.6px}
   </div>
   <div class="campo"><label>Título</label><input type="text" id="inTitulo" placeholder="Título del libro"></div>
   <div class="campo"><label>Autor</label><input type="text" id="inAutor" placeholder="Autor (opcional)"></div>
-  <div class="campo"><label>Portada</label>
+  <div class="campo"><label>Carátula <span style="opacity:.7">(si no eliges ninguna, se busca sola en internet)</span></label>
     <div class="prev-portada">
-      <div class="caja" id="prevNueva"></div>
-      <label class="elegir">🖼️ Elegir imagen<input type="file" id="inPortada" accept="image/*"></label>
+      <div class="caja" id="prevNueva">📖</div>
+      <div class="botones">
+        <button class="elegir" id="btnBuscarNueva">🔍 Buscar en internet</button>
+        <label class="elegir">🖼️ Elegir de mis fotos<input type="file" id="inPortada" accept="image/*"></label>
+      </div>
     </div>
   </div>
   <button class="btn-ancho prin" id="btnGuardarNuevo">Guardar en la biblioteca</button>
@@ -232,16 +335,32 @@ header h1{font-size:30px;margin:0;font-weight:800;letter-spacing:-.6px}
   <div id="edInfo" style="color:var(--suave);font-size:13px;margin:-8px 0 14px"></div>
   <div class="campo"><label>Título</label><input type="text" id="edTitulo"></div>
   <div class="campo"><label>Autor</label><input type="text" id="edAutor"></div>
-  <div class="campo"><label>Portada</label>
+  <div class="campo"><label>Carátula</label>
     <div class="prev-portada">
-      <div class="caja" id="prevEditar"></div>
-      <label class="elegir">🖼️ Cambiar imagen<input type="file" id="edPortada" accept="image/*"></label>
+      <div class="caja" id="prevEditar">📖</div>
+      <div class="botones">
+        <button class="elegir" id="btnBuscarEditar">🔍 Buscar en internet</button>
+        <label class="elegir">🖼️ Elegir de mis fotos<input type="file" id="edPortada" accept="image/*"></label>
+      </div>
     </div>
   </div>
   <button class="btn-ancho prin" id="btnEdGuardar">Guardar cambios</button>
   <button class="btn-ancho" id="btnEdReiniciar">Empezar desde el principio</button>
   <button class="btn-ancho peligro" id="btnEdBorrar">Borrar libro</button>
   <button class="btn-ancho" data-cerrar="#hojaEditar">Cancelar</button>
+</div></div>
+
+<!-- ===================== HOJA: BUSCAR CARÁTULA ===================== -->
+<div class="hoja" id="hojaCaratula"><div class="panel">
+  <div class="asa"></div>
+  <h2>Buscar carátula</h2>
+  <div class="busca-fila">
+    <input type="text" id="qCaratula" placeholder="Título y autor">
+    <button class="btn-buscar" id="btnQCaratula">Buscar</button>
+  </div>
+  <div id="estadoCaratula"></div>
+  <div id="gridCaratulas"></div>
+  <button class="btn-ancho" data-cerrar="#hojaCaratula">Cerrar</button>
 </div></div>
 
 <!-- ===================== HOJA: CAPÍTULOS ===================== -->
@@ -265,10 +384,9 @@ header h1{font-size:30px;margin:0;font-weight:800;letter-spacing:-.6px}
   <button class="opcion" data-min="0" style="color:var(--peligro)">Desactivar temporizador</button>
 </div></div>
 
-<!-- ===================== AVISO DE CARGA ===================== -->
 <div id="cargando"><div class="caja"><div class="rueda"></div><div id="cargandoTxt"></div></div></div>
+<div id="aviso"></div>
 
-<!-- El reproductor de audio "real" (invisible) -->
 <audio id="audio" preload="auto" playsinline></audio>
 
 <script>
@@ -279,35 +397,34 @@ header h1{font-size:30px;margin:0;font-weight:800;letter-spacing:-.6px}
 const $ = s => document.querySelector(s);
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 
-// Segundos -> "1:02:05" o "12:05"
 function fmt(s) {
   s = Math.max(0, Math.floor(s || 0));
   const h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
   return (h ? h + ':' + String(m).padStart(2, '0') : m) + ':' + String(x).padStart(2, '0');
 }
-// Segundos -> "3 h 12 min"
 function fmtLargo(s) {
   s = Math.max(0, Math.round(s || 0));
   const h = Math.floor(s / 3600), m = Math.round(s % 3600 / 60);
   return h ? `${h} h ${m} min` : `${m} min`;
 }
-function fmtMB(b) { return b > 1e9 ? (b / 1e9).toFixed(1) + ' GB' : Math.round(b / 1e6) + ' MB'; }
+function fmtMB(b) { return b > 1e9 ? (b / 1e9).toFixed(1).replace('.', ',') + ' GB' : Math.round(b / 1e6) + ' MB'; }
 function nombreLimpio(n) { return n.replace(/\.[^.]+$/, '').replace(/_+/g, ' ').trim(); }
-function iniciales(t) {
-  return (t || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join('');
-}
-// El iPhone necesita saber el tipo de audio para reproducirlo bien
+function iniciales(t) { return (t || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join(''); }
+function sinAcentos(t) { return (t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
 function tipoAudio(f) {
   if (f.type) return f.type;
   const ext = (f.name.split('.').pop() || '').toLowerCase();
   return { mp3: 'audio/mpeg', m4a: 'audio/mp4', m4b: 'audio/mp4', aac: 'audio/aac',
            wav: 'audio/wav', ogg: 'audio/ogg', flac: 'audio/flac' }[ext] || 'audio/mpeg';
 }
+let tAviso;
+function aviso(txt) {
+  const a = $('#aviso'); a.textContent = txt; a.classList.add('visible');
+  clearTimeout(tAviso); tAviso = setTimeout(() => a.classList.remove('visible'), 2600);
+}
 
 /* =====================================================================
    2. BASE DE DATOS (IndexedDB, dentro del propio iPhone)
-      - "libros":   título, autor, portada, capítulos y POSICIÓN guardada
-      - "archivos": el audio de cada capítulo
    ===================================================================== */
 let db;
 function abrirDB() {
@@ -339,33 +456,33 @@ const dbPut   = (a, obj) => operacion(a, 'readwrite', s => s.put(obj));
 const dbDel   = (a, id)  => operacion(a, 'readwrite', s => s.delete(id));
 
 /* =====================================================================
-   3. LEER ETIQUETAS ID3 DE LOS MP3 (título, autor y carátula incrustada)
+   3. LEER ETIQUETAS DE LOS ARCHIVOS (título, autor y carátula incrustada)
+      - MP3: etiquetas ID3
+      - M4B / M4A (lo normal en audiolibros): "átomos" MP4
    ===================================================================== */
 function syncsafe(b, i) { return (b[i] & 0x7f) << 21 | (b[i+1] & 0x7f) << 14 | (b[i+2] & 0x7f) << 7 | (b[i+3] & 0x7f); }
 function textoID3(d) {
-  const enc = d[0], bytes = d.subarray(1);
-  const cod = ['iso-8859-1', 'utf-16', 'utf-16be', 'utf-8'][enc] || 'iso-8859-1';
-  try { return new TextDecoder(cod).decode(bytes).replace(/\u0000/g, '').trim(); } catch (e) { return ''; }
+  const cod = ['iso-8859-1', 'utf-16', 'utf-16be', 'utf-8'][d[0]] || 'iso-8859-1';
+  try { return new TextDecoder(cod).decode(d.subarray(1)).replace(/\u0000/g, '').trim(); } catch (e) { return ''; }
 }
 function imagenID3(d) {
   const enc = d[0];
   let i = 1;
-  while (i < d.length && d[i] !== 0) i++;                       // tipo MIME
+  while (i < d.length && d[i] !== 0) i++;
   let mime = new TextDecoder('iso-8859-1').decode(d.subarray(1, i)) || 'image/jpeg';
   if (!mime.includes('/')) mime = 'image/' + mime.toLowerCase();
-  i += 2;                                                        // fin MIME + tipo de imagen
+  i += 2;
   if (enc === 1 || enc === 2) { while (i + 1 < d.length && !(d[i] === 0 && d[i+1] === 0)) i += 2; i += 2; }
-  else { while (i < d.length && d[i] !== 0) i++; i++; }          // descripción
+  else { while (i < d.length && d[i] !== 0) i++; i++; }
   return new Blob([d.slice(i)], { type: mime });
 }
 async function leerID3(file) {
   try {
     const cab = new Uint8Array(await file.slice(0, 10).arrayBuffer());
-    if (cab[0] !== 0x49 || cab[1] !== 0x44 || cab[2] !== 0x33) return {};   // no empieza por "ID3"
+    if (cab[0] !== 0x49 || cab[1] !== 0x44 || cab[2] !== 0x33) return {};
     const ver = cab[3];
     if (ver < 3) return {};
-    const tam = syncsafe(cab, 6);
-    const b = new Uint8Array(await file.slice(10, 10 + tam).arrayBuffer());
+    const b = new Uint8Array(await file.slice(10, 10 + syncsafe(cab, 6)).arrayBuffer());
     let p = 0;
     if (cab[5] & 0x40) p = ver === 4 ? syncsafe(b, 0) : ((b[0] << 24 | b[1] << 16 | b[2] << 8 | b[3]) >>> 0) + 4;
     const out = {};
@@ -382,7 +499,67 @@ async function leerID3(file) {
   } catch (e) { return {}; }
 }
 
-// Duración de un archivo de audio (si el iPhone no la da, se calcula al reproducirlo)
+// Recorre las "cajas" de un archivo MP4: [tamaño 4 bytes][tipo 4 letras][contenido]
+function leerCajas(buf, ini, fin) {
+  const v = new DataView(buf.buffer, buf.byteOffset, buf.byteLength);
+  const out = [];
+  let p = ini;
+  while (p + 8 <= fin) {
+    let tam = v.getUint32(p), cab = 8;
+    const tipo = String.fromCharCode(buf[p+4], buf[p+5], buf[p+6], buf[p+7]);
+    if (tam === 1) { tam = Number(v.getBigUint64(p + 8)); cab = 16; }
+    else if (tam === 0) tam = fin - p;
+    if (tam < cab || p + tam > fin) break;
+    out.push({ tipo, ini: p + cab, fin: p + tam });
+    p += tam;
+  }
+  return out;
+}
+async function leerMP4(file) {
+  try {
+    const ftyp = new Uint8Array(await file.slice(4, 8).arrayBuffer());
+    if (String.fromCharCode(...ftyp) !== 'ftyp') return {};
+    // Busca la caja "moov" (donde están las etiquetas), que puede estar al principio o al final
+    let p = 0, moov = null;
+    const n = file.size;
+    while (p + 8 <= n) {
+      const b = new Uint8Array(await file.slice(p, p + 16).arrayBuffer());
+      const v = new DataView(b.buffer);
+      let tam = v.getUint32(0), cab = 8;
+      const tipo = String.fromCharCode(b[4], b[5], b[6], b[7]);
+      if (tam === 1) { tam = Number(v.getBigUint64(8)); cab = 16; }
+      else if (tam === 0) tam = n - p;
+      if (tam < cab) break;
+      if (tipo === 'moov') { if (tam > 80e6) return {}; moov = new Uint8Array(await file.slice(p, p + tam).arrayBuffer()); break; }
+      p += tam;
+    }
+    if (!moov) return {};
+    const raiz = leerCajas(moov, 0, moov.length)[0];
+    const hijo = (c, t) => c && leerCajas(moov, c.ini, c.fin).find(x => x.tipo === t);
+    const meta = hijo(hijo(raiz, 'udta'), 'meta') || hijo(raiz, 'meta');
+    if (!meta) return {};
+    const ilst = leerCajas(moov, meta.ini + 4, meta.fin).find(x => x.tipo === 'ilst');
+    if (!ilst) return {};
+    const out = {}, dec = new TextDecoder('utf-8');
+    for (const it of leerCajas(moov, ilst.ini, ilst.fin)) {
+      const data = leerCajas(moov, it.ini, it.fin).find(x => x.tipo === 'data');
+      if (!data) continue;
+      const clase = moov[data.ini + 3];
+      const valor = moov.subarray(data.ini + 8, data.fin);
+      if (it.tipo === '©nam') out.TIT2 = dec.decode(valor).trim();
+      else if (it.tipo === '©alb') out.TALB = dec.decode(valor).trim();
+      else if (it.tipo === '©ART') out.TPE1 = dec.decode(valor).trim();
+      else if (it.tipo === 'aART' && !out.TPE1) out.TPE1 = dec.decode(valor).trim();
+      else if (it.tipo === 'covr' && !out.APIC) out.APIC = new Blob([valor.slice()], { type: clase === 14 ? 'image/png' : 'image/jpeg' });
+    }
+    return out;
+  } catch (e) { return {}; }
+}
+async function leerEtiquetas(file) {
+  const id3 = await leerID3(file);
+  return Object.keys(id3).length ? id3 : await leerMP4(file);
+}
+
 function getDuracion(blob) {
   return new Promise(res => {
     const a = new Audio(), url = URL.createObjectURL(blob);
@@ -396,7 +573,6 @@ function getDuracion(blob) {
   });
 }
 
-// Reduce la portada a 600 px para no gastar espacio
 function reducirImagen(blob, max = 600) {
   return new Promise(res => {
     const u = URL.createObjectURL(blob), im = new Image();
@@ -406,7 +582,7 @@ function reducirImagen(blob, max = 600) {
       c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
       c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
       URL.revokeObjectURL(u);
-      c.toBlob(b => res(b || blob), 'image/jpeg', 0.86);
+      try { c.toBlob(b => res(b || blob), 'image/jpeg', 0.86); } catch (e) { res(blob); }
     };
     im.onerror = () => { URL.revokeObjectURL(u); res(blob); };
     im.src = u;
@@ -414,25 +590,200 @@ function reducirImagen(blob, max = 600) {
 }
 
 /* =====================================================================
-   4. PORTADAS Y PROGRESO
+   4. BUSCAR CARÁTULAS EN INTERNET
+      Fuentes gratuitas: Apple Books (audiolibros y libros), Google Books y Open Library
+   ===================================================================== */
+function fetchTiempo(url, ms = 9000) {
+  const ctl = new AbortController();
+  const t = setTimeout(() => ctl.abort(), ms);
+  return fetch(url, { signal: ctl.signal }).finally(() => clearTimeout(t));
+}
+const fetchJSON = (url, ms) => fetchTiempo(url, ms).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+
+// Apple se consulta con "JSONP": se carga la respuesta como si fuera un script
+function jsonp(url, ms = 9000) {
+  return new Promise((res, rej) => {
+    const cb = 'cbItunes' + uid();
+    const s = document.createElement('script');
+    const limpiar = () => { clearTimeout(t); window[cb] = () => {}; s.remove(); };
+    const t = setTimeout(() => { limpiar(); rej(new Error('tiempo')); }, ms);
+    window[cb] = d => { limpiar(); res(d); };
+    s.onerror = () => { limpiar(); rej(new Error('jsonp')); };
+    s.src = url + '&callback=' + cb;
+    document.head.appendChild(s);
+  });
+}
+
+function limpiarTitulo(t) {
+  return (t || '')
+    .replace(/[\(\[].*?[\)\]]/g, ' ')
+    .replace(/audio\s*libros?|completo|versi[oó]n\s+\w+|narrado\s+por.*$|le[ií]do\s+por.*$|cap[ií]tulo\s*\d+|parte\s*\d+/gi, ' ')
+    .replace(/^\d+[\s._-]+/, '')
+    .replace(/[_]+/g, ' ').replace(/\s+-\s*$/, '')
+    .replace(/\s+/g, ' ').trim();
+}
+
+async function buscarCaratulas(consulta) {
+  const q = encodeURIComponent(consulta);
+  const apple = (media, campo) =>
+    jsonp(`https://itunes.apple.com/search?term=${q}&media=${media}&limit=10&country=es`)
+      .then(d => (d.results || []).filter(r => r.artworkUrl100).map(r => ({
+        url: r.artworkUrl100.replace(/\/\d+x\d+(bb)?\./, '/600x600bb.'),
+        titulo: r[campo] || r.trackName || '', fuente: 'Apple' })));
+  const listas = await Promise.allSettled([
+    apple('audiobook', 'collectionName'),
+    fetchJSON(`https://www.googleapis.com/books/v1/volumes?q=${q}&maxResults=12&printType=books`)
+      .then(d => (d.items || []).filter(i => i.volumeInfo && i.volumeInfo.imageLinks).map(i => ({
+        url: (i.volumeInfo.imageLinks.thumbnail || i.volumeInfo.imageLinks.smallThumbnail)
+               .replace('http://', 'https://').replace('&edge=curl', ''),
+        titulo: i.volumeInfo.title || '', fuente: 'Google' }))),
+    fetchJSON(`https://openlibrary.org/search.json?q=${q}&limit=12&fields=cover_i,title`)
+      .then(d => (d.docs || []).filter(x => x.cover_i).map(x => ({
+        url: `https://covers.openlibrary.org/b/id/${x.cover_i}-L.jpg`, titulo: x.title || '', fuente: 'Open Library' }))),
+    apple('ebook', 'trackName')
+  ]);
+  // Mezcla los resultados de todas las fuentes, sin repetir
+  const res = listas.map(r => r.status === 'fulfilled' ? r.value : []);
+  const todos = [], vistos = new Set();
+  for (let i = 0; i < 12; i++)
+    for (const l of res)
+      if (l[i] && !vistos.has(l[i].url)) { vistos.add(l[i].url); todos.push(l[i]); }
+  return todos;
+}
+
+function probarImagen(url) {
+  return new Promise(res => {
+    const im = new Image();
+    const t = setTimeout(() => res(false), 9000);
+    im.onload = () => { clearTimeout(t); res(im.naturalWidth > 10); };
+    im.onerror = () => { clearTimeout(t); res(false); };
+    im.src = url;
+  });
+}
+// Intenta guardar la imagen dentro de la app; si el servidor no deja, guarda su dirección
+async function descargarImagen(url) {
+  try {
+    const r = await fetchTiempo(url, 10000);
+    if (!r.ok) throw 0;
+    const b = await r.blob();
+    if (!b.type.startsWith('image/') || b.size < 1500) throw 0;
+    return { blob: await reducirImagen(b), reducida: true };
+  } catch (e) {
+    return (await probarImagen(url)) ? { url } : {};
+  }
+}
+
+async function aplicarCaratula(l, d) {
+  if (!d || (!d.blob && !d.url)) return false;
+  if (d.blob) { l.portada = d.reducida ? d.blob : await reducirImagen(d.blob); l.portadaUrl = null; }
+  else { l.portada = null; l.portadaUrl = d.url; }
+  olvidarPortada(l.id);
+  return true;
+}
+
+// Busca sola la carátula de un libro y se queda con la primera que funcione
+async function caratulaAutomatica(l) {
+  l.caratulaBuscada = true;
+  try {
+    const t = limpiarTitulo(l.titulo);
+    const a = /audio\s*libro/i.test(l.autor || '') ? '' : (l.autor || '');
+    let res = a ? await buscarCaratulas(t + ' ' + a) : [];
+    if (!res.length) res = await buscarCaratulas(t);
+    for (const r of res.slice(0, 4)) {
+      if (await aplicarCaratula(l, await descargarImagen(r.url))) break;
+    }
+  } catch (e) {}
+  await dbPut('libros', l).catch(() => {});
+  return !!(l.portada || l.portadaUrl);
+}
+
+// Al abrir la app, busca carátula a los libros que no tengan
+async function completarCaratulas() {
+  if (!navigator.onLine) return;
+  for (const l of libros.filter(x => !x.portada && !x.portadaUrl && !x.caratulaBuscada)) {
+    if (await caratulaAutomatica(l)) {
+      pintarBiblioteca(); pintarContinuar();
+      if (libro && libro.id === l.id) { pintarReproductor(); ponerMetadatos(); }
+    }
+  }
+}
+
+// ---- Ventana para elegir carátula a mano ----
+let alElegirCaratula = null;
+function abrirBuscadorCaratula(consulta, cb) {
+  alElegirCaratula = cb;
+  $('#qCaratula').value = limpiarTitulo(consulta);
+  abrirHoja('#hojaCaratula');
+  lanzarBusqueda();
+}
+async function lanzarBusqueda() {
+  const q = $('#qCaratula').value.trim();
+  const g = $('#gridCaratulas'); g.innerHTML = '';
+  if (!q) { $('#estadoCaratula').textContent = 'Escribe el título del libro.'; return; }
+  if (!navigator.onLine) { $('#estadoCaratula').textContent = 'No hay conexión a internet.'; return; }
+  $('#estadoCaratula').textContent = 'Buscando…';
+  const res = await buscarCaratulas(q);
+  if (q !== $('#qCaratula').value.trim()) return;
+  $('#estadoCaratula').textContent = res.length
+    ? `${res.length} resultados · toca la que quieras`
+    : 'No se ha encontrado nada. Prueba solo con el título, o con título y autor.';
+  for (const r of res) {
+    const b = document.createElement('button'); b.className = 'res-car'; b.title = r.titulo;
+    const im = document.createElement('img'); im.loading = 'lazy'; im.src = r.url; im.alt = r.titulo;
+    im.onerror = () => b.remove();
+    const f = document.createElement('span'); f.textContent = r.fuente;
+    b.append(im, f);
+    b.onclick = async () => {
+      cerrarHoja('#hojaCaratula');
+      mostrarCargando('Descargando carátula…');
+      const d = await descargarImagen(r.url);
+      ocultarCargando();
+      if (!d.blob && !d.url) { aviso('No se pudo descargar esa imagen'); return; }
+      if (alElegirCaratula) alElegirCaratula(d);
+    };
+    g.appendChild(b);
+  }
+}
+$('#btnQCaratula').onclick = lanzarBusqueda;
+$('#qCaratula').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); lanzarBusqueda(); } });
+
+/* =====================================================================
+   5. PORTADAS Y PROGRESO
    ===================================================================== */
 const urlsPortada = new Map();
 function urlPortada(l) {
-  if (!l.portada) return null;
-  let u = urlsPortada.get(l.id);
-  if (!u) { u = URL.createObjectURL(l.portada); urlsPortada.set(l.id, u); }
-  return u;
+  if (l.portada) {
+    let u = urlsPortada.get(l.id);
+    if (!u) { u = URL.createObjectURL(l.portada); urlsPortada.set(l.id, u); }
+    return u;
+  }
+  return l.portadaUrl || null;
 }
 function olvidarPortada(id) {
   const u = urlsPortada.get(id);
   if (u) { URL.revokeObjectURL(u); urlsPortada.delete(id); }
 }
-function elPortada(l, clase) {
+// pequeña = true → solo iniciales (para el mini reproductor)
+function elPortada(l, pequena) {
   const u = urlPortada(l);
-  if (u) { const i = document.createElement('img'); i.src = u; i.alt = ''; i.className = clase; return i; }
-  const d = document.createElement('div'); d.className = clase + ' placeholder'; d.textContent = iniciales(l.titulo);
+  if (u) {
+    const i = document.createElement('img'); i.src = u; i.alt = ''; i.className = 'portada';
+    i.onerror = () => i.replaceWith(phPortada(l, pequena));
+    return i;
+  }
+  return phPortada(l, pequena);
+}
+function phPortada(l, pequena) {
+  const d = document.createElement('div');
+  d.className = 'portada placeholder' + (pequena ? ' ini' : '');
+  if (pequena) { d.textContent = iniciales(l.titulo); return d; }
+  const t = document.createElement('div'); t.className = 'ph-tit'; t.textContent = l.titulo;
+  const a = document.createElement('div'); a.className = 'ph-aut'; a.textContent = l.autor || '';
+  d.append(t, a);
   return d;
 }
+function fondoDe(l) { const u = l && urlPortada(l); return u ? `url("${u}")` : 'linear-gradient(135deg,#8a4b1c,#2a1a0f)'; }
+
 function totalLibro(l) { return l.capitulos.reduce((a, c) => a + (c.duracion || 0), 0); }
 function escuchado(l, pos) {
   let s = 0;
@@ -444,16 +795,21 @@ function porcentaje(l, pos) {
   const t = totalLibro(l);
   return t ? Math.min(100, Math.round(escuchado(l, pos) / t * 100)) : 0;
 }
+function estado(l) {
+  if (l.terminado) return 'fin';
+  const pos = (libro && libro.id === l.id) ? posicionActual() : null;
+  return escuchado(l, pos) > 5 ? 'curso' : 'nuevos';
+}
 
 /* =====================================================================
-   5. BIBLIOTECA
+   6. BIBLIOTECA
    ===================================================================== */
 let libros = [];
+let filtro = 'todos';
 function leerLocal(id) { try { return JSON.parse(localStorage.getItem('pos_' + id)); } catch (e) { return null; } }
 
 async function cargarBiblioteca() {
   libros = await dbTodos('libros');
-  // Si la copia rápida (localStorage) es más reciente, manda ella
   for (const l of libros) {
     const g = leerLocal(l.id);
     if (g && g.t > (l.actualizado || 0) && g.cap < l.capitulos.length) { l.cap = g.cap; l.pos = g.pos; l.actualizado = g.t; }
@@ -461,58 +817,103 @@ async function cargarBiblioteca() {
   if (libro) { const i = libros.findIndex(x => x.id === libro.id); if (i >= 0) libros[i] = libro; }
   libros.sort((a, b) => (b.actualizado || 0) - (a.actualizado || 0));
   pintarBiblioteca();
+  pintarContinuar();
   pintarMini();
-  mostrarEspacio();
+  mostrarEstadis();
 }
 
 function pintarBiblioteca() {
   const cont = $('#biblioteca');
   cont.innerHTML = '';
+  $('#herr').style.display = libros.length > 1 ? '' : 'none';
   if (!libros.length) {
+    $('#tituloSeccion').style.display = 'none';
     cont.innerHTML = '<div class="vacio"><span class="grande">🎧</span>Tu biblioteca está vacía.<br>Pulsa <b>+</b> para añadir tu primer audiolibro.</div>';
     return;
   }
-  for (const l of libros) {
+  $('#tituloSeccion').style.display = '';
+  const q = sinAcentos($('#buscar').value.trim());
+  const lista = libros.filter(l =>
+    (filtro === 'todos' || estado(l) === filtro) &&
+    (!q || sinAcentos(l.titulo + ' ' + (l.autor || '')).includes(q)));
+  $('#tituloSeccion').textContent = { todos: 'Mi biblioteca', curso: 'Escuchando', nuevos: 'Sin empezar', fin: 'Terminados' }[filtro]
+    + ` · ${lista.length}`;
+  if (!lista.length) { cont.innerHTML = '<div class="vacio">No hay libros que coincidan.</div>'; return; }
+
+  for (const l of lista) {
     const card = document.createElement('div');
     card.className = 'libro' + (libro && libro.id === l.id ? ' actual' : '');
-    card.appendChild(elPortada(l, 'portada'));
-    const info = document.createElement('div'); info.className = 'info';
+    const tapa = document.createElement('div'); tapa.className = 'tapa';
+    tapa.appendChild(elPortada(l));
+    const est = estado(l);
+    if (est !== 'curso') {
+      const ins = document.createElement('div');
+      ins.className = 'insignia' + (est === 'fin' ? ' fin' : '');
+      ins.textContent = est === 'fin' ? '✓ TERMINADO' : 'NUEVO';
+      tapa.appendChild(ins);
+    }
+    const mas = document.createElement('button'); mas.className = 'mas'; mas.textContent = '⋯'; mas.setAttribute('aria-label', 'Opciones');
+    mas.onclick = e => { e.stopPropagation(); abrirEditar(l.id); };
+    tapa.appendChild(mas);
+
     const t = document.createElement('div'); t.className = 'tit'; t.textContent = l.titulo;
     const a = document.createElement('div'); a.className = 'aut'; a.textContent = l.autor || 'Autor desconocido';
+    card.append(tapa, t, a);
     const pos = (libro && libro.id === l.id) ? posicionActual() : null;
     const p = porcentaje(l, pos);
-    const b = document.createElement('div'); b.className = 'barra';
-    const bi = document.createElement('div'); bi.style.width = p + '%'; b.appendChild(bi);
     const pc = document.createElement('div'); pc.className = 'pct';
-    pc.textContent = l.terminado ? 'Terminado ✓'
-      : (escuchado(l, pos) > 1 ? `${p} % · cap. ${l.cap + 1} de ${l.capitulos.length}`
-      : `Sin empezar · ${l.capitulos.length} archivo${l.capitulos.length > 1 ? 's' : ''}`);
-    info.append(t, a, b, pc);
-    card.appendChild(info);
-    const mas = document.createElement('button'); mas.className = 'mas'; mas.textContent = '⋯';
-    mas.onclick = e => { e.stopPropagation(); abrirEditar(l.id); };
-    card.appendChild(mas);
+    if (est === 'curso') {
+      const b = document.createElement('div'); b.className = 'barra';
+      const bi = document.createElement('div'); bi.style.width = p + '%'; b.appendChild(bi);
+      card.appendChild(b);
+      pc.textContent = `${p} % · quedan ${fmtLargo(totalLibro(l) - escuchado(l, pos))}`;
+    } else pc.textContent = fmtLargo(totalLibro(l)) + (l.capitulos.length > 1 ? ` · ${l.capitulos.length} partes` : '');
+    card.appendChild(pc);
     card.onclick = () => abrirLibro(l.id, true);
     cont.appendChild(card);
   }
 }
 
-function mostrarEspacio() {
-  if (navigator.storage && navigator.storage.estimate)
-    navigator.storage.estimate().then(e => {
-      $('#espacio').textContent = `${libros.length} libro${libros.length === 1 ? '' : 's'} · ${fmtMB(e.usage || 0)} ocupados`;
-    }).catch(() => {});
-  else $('#espacio').textContent = `${libros.length} libros`;
+function mostrarEstadis() {
+  const horas = libros.reduce((s, l) => s + totalLibro(l), 0);
+  const base = libros.length ? `${libros.length} libro${libros.length === 1 ? '' : 's'} · ${fmtLargo(horas)} de audio` : 'Tu biblioteca de audiolibros';
+  $('#estadis').textContent = base;
+  if (libros.length && navigator.storage && navigator.storage.estimate)
+    navigator.storage.estimate().then(e => { $('#estadis').textContent = base + ' · ' + fmtMB(e.usage || 0); }).catch(() => {});
 }
 
-/* =====================================================================
-   6. AÑADIR UN LIBRO NUEVO
-   ===================================================================== */
-let nuevosArchivos = [], nuevaPortada = null;
+$('#buscar').addEventListener('input', pintarBiblioteca);
+document.querySelectorAll('.chip').forEach(c => c.onclick = () => {
+  filtro = c.dataset.f;
+  document.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x === c));
+  pintarBiblioteca();
+});
 
-function mostrarPrev(caja, blob) {
+// ---- Tarjeta "Continuar escuchando" ----
+function pintarContinuar() {
+  const c = $('#continuar');
+  if (!libro) { c.style.display = 'none'; return; }
+  c.style.display = 'block';
+  $('#heroFondo').style.backgroundImage = fondoDe(libro);
+  const tapa = $('#heroTapa'); tapa.innerHTML = ''; tapa.appendChild(elPortada(libro));
+  $('#heroTit').textContent = libro.titulo;
+  $('#heroAut').textContent = libro.autor || '';
+  pintarTiempo();
+  pintarBotonPlay();
+}
+$('#continuar').onclick = () => abrirReproductor();
+$('#heroPlay').onclick = e => { e.stopPropagation(); alternar(); };
+
+/* =====================================================================
+   7. AÑADIR UN LIBRO NUEVO
+   ===================================================================== */
+let nuevosArchivos = [], nuevaPortada = null;   // nuevaPortada = {blob} o {url}
+
+function mostrarPrev(caja, p) {
   const c = $(caja); c.innerHTML = '';
-  if (blob) { const i = document.createElement('img'); i.src = URL.createObjectURL(blob); c.appendChild(i); }
+  const src = p instanceof Blob ? URL.createObjectURL(p) : (p && p.blob ? URL.createObjectURL(p.blob) : (p && p.url) || p);
+  if (src) { const i = document.createElement('img'); i.src = src; c.appendChild(i); }
+  else c.textContent = '📖';
 }
 function limpiarNuevo() {
   nuevosArchivos = []; nuevaPortada = null;
@@ -524,20 +925,24 @@ function limpiarNuevo() {
 $('#btnNuevo').onclick = () => { limpiarNuevo(); abrirHoja('#hojaNuevo'); };
 
 $('#inArchivos').onchange = async e => {
-  // Ordena los archivos por nombre (01, 02, 10… en orden natural)
   nuevosArchivos = [...e.target.files].sort((a, b) => a.name.localeCompare(b.name, 'es', { numeric: true }));
   $('#listaNuevos').textContent = nuevosArchivos.length
     ? `${nuevosArchivos.length} archivo(s): ` + nuevosArchivos.map(f => f.name).join(' · ') : '';
   if (!nuevosArchivos.length) return;
-  const tags = await leerID3(nuevosArchivos[0]);
+  const tags = await leerEtiquetas(nuevosArchivos[0]);
   if (!$('#inTitulo').value)
     $('#inTitulo').value = tags.TALB || (nuevosArchivos.length === 1 && tags.TIT2) || nombreLimpio(nuevosArchivos[0].name);
   if (!$('#inAutor').value && tags.TPE1) $('#inAutor').value = tags.TPE1;
-  if (!nuevaPortada && tags.APIC) { nuevaPortada = tags.APIC; mostrarPrev('#prevNueva', nuevaPortada); }
+  if (!nuevaPortada && tags.APIC) { nuevaPortada = { blob: tags.APIC }; mostrarPrev('#prevNueva', nuevaPortada); }
 };
 $('#inPortada').onchange = e => {
   const f = e.target.files[0];
-  if (f) { nuevaPortada = f; mostrarPrev('#prevNueva', f); }
+  if (f) { nuevaPortada = { blob: f }; mostrarPrev('#prevNueva', nuevaPortada); }
+};
+$('#btnBuscarNueva').onclick = () => {
+  const t = $('#inTitulo').value.trim() || (nuevosArchivos[0] && nombreLimpio(nuevosArchivos[0].name)) || '';
+  const a = $('#inAutor').value.trim();
+  abrirBuscadorCaratula(a && !/audio\s*libro/i.test(a) ? t + ' ' + a : t, d => { nuevaPortada = d; mostrarPrev('#prevNueva', d); });
 };
 
 $('#btnGuardarNuevo').onclick = async () => {
@@ -547,35 +952,42 @@ $('#btnGuardarNuevo').onclick = async () => {
   const archivos = nuevosArchivos, portada = nuevaPortada;
   cerrarHoja('#hojaNuevo');
   mostrarCargando('Preparando…');
-  // Pide al iPhone que no borre nunca estos datos
   if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
   const guardados = [];
+  let nuevo = null;
   try {
     const ahora = Date.now();
-    const nuevo = { id: uid(), titulo, autor, portada: portada ? await reducirImagen(portada) : null,
-                    capitulos: [], cap: 0, pos: 0, velocidad: 1, creado: ahora, actualizado: ahora, terminado: false };
+    nuevo = { id: uid(), titulo, autor, portada: null, portadaUrl: null,
+              capitulos: [], cap: 0, pos: 0, velocidad: 1, creado: ahora, actualizado: ahora, terminado: false };
+    if (portada) await aplicarCaratula(nuevo, portada);
     for (let i = 0; i < archivos.length; i++) {
       const f = archivos[i];
       mostrarCargando(`Guardando ${i + 1} de ${archivos.length}…\n${f.name}`);
       const archivoId = uid();
       await dbPut('archivos', { id: archivoId, blob: new Blob([f], { type: tipoAudio(f) }) });
       guardados.push(archivoId);
-      const tags = archivos.length > 1 ? await leerID3(f) : {};
+      const tags = archivos.length > 1 ? await leerEtiquetas(f) : {};
       const duracion = await getDuracion(f);
       nuevo.capitulos.push({ nombre: tags.TIT2 || nombreLimpio(f.name), archivoId, duracion });
     }
     await dbPut('libros', nuevo);
   } catch (err) {
     for (const id of guardados) await dbDel('archivos', id).catch(() => {});
+    nuevo = null;
     alert('No se pudo guardar el libro.\n' + (err && err.message || err) + '\n\nPuede que no quede espacio libre en el iPhone.');
+  }
+  if (nuevo && !nuevo.portada && !nuevo.portadaUrl && navigator.onLine) {
+    mostrarCargando('Buscando la carátula en internet…');
+    await caratulaAutomatica(nuevo);
   }
   ocultarCargando();
   limpiarNuevo();
-  cargarBiblioteca();
+  await cargarBiblioteca();
+  if (nuevo) aviso(`«${nuevo.titulo}» añadido a la biblioteca`);
 };
 
 /* =====================================================================
-   7. EDITAR / REINICIAR / BORRAR
+   8. EDITAR / REINICIAR / BORRAR
    ===================================================================== */
 let editId = null, editPortada = null;
 const objLibro = id => (libro && libro.id === id) ? libro : libros.find(x => x.id === id);
@@ -586,20 +998,25 @@ function abrirEditar(id) {
   $('#edTitulo').value = l.titulo; $('#edAutor').value = l.autor || '';
   $('#edPortada').value = '';
   $('#edInfo').textContent = `${l.capitulos.length} archivo(s) · ${fmtLargo(totalLibro(l))} en total`;
-  mostrarPrev('#prevEditar', l.portada);
+  mostrarPrev('#prevEditar', urlPortada(l));
   abrirHoja('#hojaEditar');
 }
-$('#edPortada').onchange = e => { const f = e.target.files[0]; if (f) { editPortada = f; mostrarPrev('#prevEditar', f); } };
+$('#edPortada').onchange = e => { const f = e.target.files[0]; if (f) { editPortada = { blob: f }; mostrarPrev('#prevEditar', editPortada); } };
+$('#btnBuscarEditar').onclick = () => {
+  const t = $('#edTitulo').value.trim(), a = $('#edAutor').value.trim();
+  abrirBuscadorCaratula(a && !/audio\s*libro/i.test(a) ? t + ' ' + a : t, d => { editPortada = d; mostrarPrev('#prevEditar', d); });
+};
 
 $('#btnEdGuardar').onclick = async () => {
   const l = objLibro(editId); if (!l) return;
   l.titulo = $('#edTitulo').value.trim() || l.titulo;
   l.autor = $('#edAutor').value.trim();
-  if (editPortada) { l.portada = await reducirImagen(editPortada); olvidarPortada(l.id); }
+  if (editPortada) await aplicarCaratula(l, editPortada);
   await dbPut('libros', l);
   cerrarHoja('#hojaEditar');
   if (libro && libro.id === l.id) { pintarReproductor(); ponerMetadatos(); }
-  cargarBiblioteca();
+  await cargarBiblioteca();
+  aviso('Cambios guardados');
 };
 
 $('#btnEdReiniciar').onclick = async () => {
@@ -630,14 +1047,14 @@ $('#btnEdBorrar').onclick = async () => {
 };
 
 /* =====================================================================
-   8. REPRODUCTOR Y GUARDADO DEL PUNTO EXACTO
+   9. REPRODUCTOR Y GUARDADO DEL PUNTO EXACTO
    ===================================================================== */
 const audio = $('#audio');
-let libro = null;          // libro abierto ahora
-let urlAudio = null;       // dirección interna del capítulo cargado
-let posPendiente = null;   // posición a la que hay que saltar cuando el audio esté listo
-let objetivo = null;       // posición pedida que aún no se ha confirmado
-let arrastrando = false;   // el dedo está moviendo la barra
+let libro = null;
+let urlAudio = null;
+let posPendiente = null;
+let objetivo = null;
+let arrastrando = false;
 let ultimoGuardado = 0;
 let finTemporizador = 0, temporizadorCap = false;
 
@@ -648,18 +1065,16 @@ function duracionCap() {
   if (isFinite(audio.duration) && audio.duration > 0) return audio.duration;
   return libro ? (libro.capitulos[libro.cap].duracion || 0) : 0;
 }
-// La posición "de verdad": si aún no se ha podido saltar, vale la pendiente
 function posicionActual() {
   if (posPendiente != null) return posPendiente;
   if (objetivo != null) return objetivo;
   return audio.currentTime || 0;
 }
 
-// ---- GUARDAR: en la base de datos y en una copia rápida (localStorage) ----
 function guardarPos(forzar) {
   if (!libro) return;
   const ahora = Date.now();
-  if (!forzar && ahora - ultimoGuardado < 2000) return;   // como mucho cada 2 segundos
+  if (!forzar && ahora - ultimoGuardado < 2000) return;
   ultimoGuardado = ahora;
   libro.pos = posicionActual();
   libro.actualizado = ahora;
@@ -680,6 +1095,7 @@ async function abrirLibro(id, mostrar) {
     quitarTemporizador();
     await cargarCapitulo(libro.cap, libro.pos || 0, false);
     pintarBiblioteca();
+    pintarContinuar();
   }
   if (mostrar) abrirReproductor();
 }
@@ -702,7 +1118,6 @@ async function cargarCapitulo(i, pos, reproducir) {
   guardarPos(true);
 }
 
-// Cuando el audio ya sabe su duración, saltamos al punto guardado
 function aplicarPendiente() {
   if (posPendiente == null || audio.readyState < 1) return;
   const d = audio.duration;
@@ -740,14 +1155,13 @@ async function irCapitulo(i, reproducir) {
   await cargarCapitulo(i, 0, reproducir);
 }
 
-// ---- Eventos del audio ----
 audio.addEventListener('loadedmetadata', () => {
   aplicarPendiente();
   if (libro) {
     audio.playbackRate = libro.velocidad || 1;
     const c = libro.capitulos[libro.cap];
     if (isFinite(audio.duration) && Math.abs((c.duracion || 0) - audio.duration) > 1) {
-      c.duracion = audio.duration;   // corrige la duración si al importar no se supo
+      c.duracion = audio.duration;
       guardarPos(true);
     }
   }
@@ -755,7 +1169,7 @@ audio.addEventListener('loadedmetadata', () => {
 });
 audio.addEventListener('playing', () => {
   aplicarPendiente();
-  if (objetivo != null) {             // el iPhone a veces ignora el primer salto: se repite
+  if (objetivo != null) {
     if (Math.abs(audio.currentTime - objetivo) > 2) audio.currentTime = objetivo;
     objetivo = null;
   }
@@ -786,26 +1200,27 @@ audio.addEventListener('ended', async () => {
     libro.terminado = true;
     guardarPos(true);
     pintarReproductor();
+    pintarBiblioteca();
   }
 });
 
-// ---- Guardar SIEMPRE al salir, cerrar o mandar la app al fondo ----
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') guardarPos(true); });
 window.addEventListener('pagehide', () => guardarPos(true));
 window.addEventListener('beforeunload', () => guardarPos(true));
 
 /* =====================================================================
-   9. PINTAR EL REPRODUCTOR
+   10. PINTAR EL REPRODUCTOR
    ===================================================================== */
 function pintarReproductor() {
   if (!libro) return;
+  $('#reproductor').style.setProperty('--fondo-img', fondoDe(libro));
   const cont = $('#repPortada'); cont.innerHTML = '';
-  cont.appendChild(elPortada(libro, 'grande'));
+  cont.appendChild(elPortada(libro));
   $('#repTitulo').textContent = libro.titulo;
   $('#repAutor').textContent = libro.autor || '';
   const c = libro.capitulos[libro.cap];
   $('#repCap').textContent = libro.terminado ? '¡Libro terminado! Pulsa ▶ para volver a empezar'
-    : (libro.capitulos.length > 1 ? `Capítulo ${libro.cap + 1} de ${libro.capitulos.length} · ${c.nombre}` : c.nombre);
+    : (libro.capitulos.length > 1 ? `Parte ${libro.cap + 1} de ${libro.capitulos.length} · ${c.nombre}` : c.nombre);
   $('#btnVel').textContent = velTexto(libro.velocidad || 1);
   $('#btnAnt').disabled = libro.cap === 0;
   $('#btnSig').disabled = libro.cap >= libro.capitulos.length - 1;
@@ -822,30 +1237,47 @@ function pintarTiempo() {
   s.style.setProperty('--p', (d ? p / d * 100 : 0) + '%');
   $('#tAct').textContent = fmt(p);
   $('#tRest').textContent = '-' + fmt(Math.max(0, d - p));
-  const total = totalLibro(libro);
-  $('#repTotal').textContent = total ? `Quedan ${fmtLargo(total - escuchado(libro, p))} del libro · ${porcentaje(libro, p)} %` : '';
-  $('#miniBarra').style.width = porcentaje(libro, p) + '%';
-  $('#miniCap').textContent = libro.capitulos.length > 1 ? `Cap. ${libro.cap + 1} · ${fmt(p)}` : fmt(p);
+  const total = totalLibro(libro), pc = porcentaje(libro, p);
+  const queda = fmtLargo(total - escuchado(libro, p));
+  $('#repTotal').textContent = total ? `Quedan ${queda} del libro · ${pc} %` : '';
+  $('#miniBarra').style.width = pc + '%';
+  $('#heroBarra').style.width = pc + '%';
+  const parte = libro.capitulos.length > 1 ? `Parte ${libro.cap + 1} de ${libro.capitulos.length} · ` : '';
+  $('#heroInfo').textContent = libro.terminado ? 'Terminado ✓' : `${parte}quedan ${queda}`;
+  $('#miniCap').textContent = libro.capitulos.length > 1 ? `Parte ${libro.cap + 1} · ${fmt(p)}` : fmt(p);
 }
 function pintarBotonPlay() {
   const ico = audio.paused ? ICO_PLAY : ICO_PAUSA;
   $('#btnPlay').innerHTML = ico;
   $('#miniPlay').innerHTML = ico;
+  $('#heroPlay').innerHTML = ico;
+  $('#repPortada').classList.toggle('pausado', audio.paused);
 }
+let heroVisible = false;
 function pintarMini() {
   const m = $('#mini');
-  if (!libro) { m.style.display = 'none'; return; }
-  m.style.display = 'flex';
-  const img = $('#miniImg'); img.innerHTML = ''; img.appendChild(elPortada(libro, 'portada'));
+  const abierto = $('#reproductor').classList.contains('abierto');
+  m.classList.toggle('visible', !!libro && !heroVisible && !abierto);
+  if (!libro) return;
+  const img = $('#miniImg'); img.innerHTML = ''; img.appendChild(elPortada(libro, true));
   $('#miniTit').textContent = libro.titulo;
-  $('#miniCap').textContent = libro.capitulos.length > 1
-    ? `Cap. ${libro.cap + 1} · ${fmt(posicionActual())}` : fmt(posicionActual());
+}
+// El mini reproductor solo aparece cuando la tarjeta "Continuar" no se ve
+if ('IntersectionObserver' in window)
+  new IntersectionObserver(e => { heroVisible = e[0].isIntersecting; pintarMini(); }).observe($('#continuar'));
+
+function abrirReproductor() {
+  pintarReproductor();
+  $('#reproductor').classList.add('abierto');
+  document.body.classList.add('bloqueado');
+  pintarMini();
+}
+function cerrarReproductor() {
+  $('#reproductor').classList.remove('abierto');
+  document.body.classList.remove('bloqueado');
+  pintarBiblioteca(); pintarContinuar(); pintarMini();
 }
 
-function abrirReproductor() { pintarReproductor(); $('#reproductor').classList.add('abierto'); document.body.style.overflow = 'hidden'; }
-function cerrarReproductor() { $('#reproductor').classList.remove('abierto'); document.body.style.overflow = ''; pintarBiblioteca(); pintarMini(); }
-
-// ---- Botones ----
 $('#btnPlay').onclick = alternar;
 $('#miniPlay').onclick = e => { e.stopPropagation(); alternar(); };
 $('#mini').onclick = () => abrirReproductor();
@@ -865,7 +1297,6 @@ slider.addEventListener('input', () => {
 });
 slider.addEventListener('change', () => { arrastrando = false; saltarA(+slider.value); });
 
-// Velocidad
 const VELOCIDADES = [0.75, 1, 1.25, 1.5, 1.75, 2];
 const velTexto = v => String(v).replace('.', ',') + '×';
 $('#btnVel').onclick = () => {
@@ -877,7 +1308,6 @@ $('#btnVel').onclick = () => {
   guardarPos(true);
 };
 
-// Capítulos
 $('#btnCapitulos').onclick = () => {
   const cont = $('#listaCapitulos'); cont.innerHTML = '';
   libro.capitulos.forEach((c, i) => {
@@ -893,7 +1323,6 @@ $('#btnCapitulos').onclick = () => {
   const act = cont.querySelector('.actual'); if (act) act.scrollIntoView({ block: 'center' });
 };
 
-// Temporizador para dormir
 $('#btnDormir').onclick = () => abrirHoja('#hojaDormir');
 document.querySelectorAll('#hojaDormir .opcion').forEach(b => b.onclick = () => {
   const v = b.dataset.min;
@@ -910,13 +1339,13 @@ function comprobarTemporizador() {
 }
 function pintarTemporizador() {
   const b = $('#btnDormir');
-  if (temporizadorCap) { b.textContent = '🌙 Fin cap.'; b.classList.add('activo'); }
+  if (temporizadorCap) { b.textContent = '🌙 Fin de parte'; b.classList.add('activo'); }
   else if (finTemporizador) { b.textContent = '🌙 ' + Math.ceil((finTemporizador - Date.now()) / 60000) + ' min'; b.classList.add('activo'); }
   else { b.textContent = '🌙 Dormir'; b.classList.remove('activo'); }
 }
 
 /* =====================================================================
-   10. PANTALLA DE BLOQUEO Y CENTRO DE CONTROL
+   11. PANTALLA DE BLOQUEO Y CENTRO DE CONTROL
    ===================================================================== */
 function ponerMetadatos() {
   if (!('mediaSession' in navigator) || !libro) return;
@@ -948,7 +1377,7 @@ if ('mediaSession' in navigator) {
 }
 
 /* =====================================================================
-   11. HOJAS Y AVISOS
+   12. HOJAS Y AVISOS
    ===================================================================== */
 function abrirHoja(sel) { $(sel).classList.add('abierta'); }
 function cerrarHoja(sel) { $(sel).classList.remove('abierta'); }
@@ -958,7 +1387,7 @@ function mostrarCargando(txt) { $('#cargandoTxt').textContent = txt; $('#cargand
 function ocultarCargando() { $('#cargando').style.display = 'none'; }
 
 /* =====================================================================
-   12. ARRANQUE: abre la base de datos y deja listo el último libro
+   13. ARRANQUE
    ===================================================================== */
 (async function arrancar() {
   pintarBotonPlay();
@@ -971,6 +1400,7 @@ function ocultarCargando() { $('#cargando').style.display = 'none'; }
     $('#biblioteca').innerHTML = '<div class="vacio">No se pudo abrir la base de datos.<br>' + (e && e.message || e) + '</div>';
   }
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+  completarCaratulas();
 })();
 </script>
 </body>

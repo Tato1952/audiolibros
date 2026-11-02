@@ -41,7 +41,13 @@ Formatos: MP3, M4A, M4B, AAC, WAV.
   Al abrir, usa la más reciente.
 - Al volver a abrir la app, el último libro aparece abajo listo en su sitio: pulsas ▶ y sigue.
 
-## 5. Otras funciones
+## 5. Carátulas
+- Si el archivo (MP3, M4B o M4A) lleva la carátula dentro, se usa esa.
+- Si no, al guardar el libro **la busca sola en internet** (Apple Books, Google Books y Open Library).
+- Para cambiarla: botón **⋯** del libro → **Buscar en internet** → toca la que te guste.
+- Los libros que no tengan carátula la buscan solos al abrir la app (con internet).
+
+## 6. Otras funciones
 - Retroceder 15 s / avanzar 30 s, capítulo anterior / siguiente, lista de capítulos.
 - Velocidad: 0,75× a 2× (se recuerda por libro).
 - Temporizador para dormir: 5, 15, 30, 45, 60 min o al acabar el capítulo.

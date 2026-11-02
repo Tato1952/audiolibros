@@ -1,6 +1,6 @@
 // Guarda la app en el iPhone para que funcione sin conexión.
 // Si cambias index.html, sube el número de versión (v2, v3…) para que se actualice.
-const VERSION = 'audiolibros-v1';
+const VERSION = 'audiolibros-v2';
 const ARCHIVOS = ['./', './index.html', './manifest.webmanifest', './icon-180.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
