@@ -47,7 +47,22 @@ Formatos: MP3, M4A, M4B, AAC, WAV.
 - Para cambiarla: botón **⋯** del libro → **Buscar en internet** → toca la que te guste.
 - Los libros que no tengan carátula la buscan solos al abrir la app (con internet).
 
-## 6. Otras funciones
+## 6. Sonido (botón «Sonido» del reproductor)
+- **Volumen** de 0 a 200 % (también en la barra bajo los botones). Por encima de 100 % sube las voces bajitas.
+- **Ecualizador** de 5 bandas con ajustes listos: Normal, Voz clara, Más graves, Suave, Altavoz móvil, Noche.
+- **Igualar volumen**: sube las partes bajas y baja las fuertes (coche, calle, ruido).
+- En el iPhone, con volumen distinto de 100 % o ecualizador encendido, el audio pasa por un procesador
+  y en algunos iPhone se para al bloquear la pantalla. Si pasa, pulsa **Restablecer**.
+
+## 7. Marcadores, velocidad y ajustes
+- **Marcadores**: guarda puntos del libro con una nota; tócalos para volver allí.
+- **Velocidad**: de 0,5× a 3× en pasos de 0,05 (cada libro recuerda la suya).
+- **Ajustes** (⚙️ arriba): segundos de los botones de saltar, rebobinado al reanudar,
+  estadísticas (tiempo escuchado, espacio usado) y buscar carátulas que falten.
+- **Ordenar** la biblioteca por recientes, título, autor o progreso (botón ↕).
+- Deslizar el reproductor hacia abajo lo cierra.
+
+## 8. Otras funciones
 - Retroceder 15 s / avanzar 30 s, capítulo anterior / siguiente, lista de capítulos.
 - Velocidad: 0,75× a 2× (se recuerda por libro).
 - Temporizador para dormir: 5, 15, 30, 45, 60 min o al acabar el capítulo.
