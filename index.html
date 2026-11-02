@@ -30,22 +30,30 @@ button:disabled{opacity:.3}
 input[type=text],input[type=search]{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--linea);
   background:var(--panel2);color:var(--texto);font-size:16px;-webkit-user-select:text;user-select:text;outline:none}
 #app{max-width:980px;margin:0 auto}
+svg{fill:currentColor}
+
+/* deslizadores (volumen, bandas del ecualizador) */
+input.rango{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;outline:none;margin:0;
+  background:linear-gradient(90deg,var(--acento) var(--p,50%),rgba(255,255,255,.18) var(--p,50%))}
+input.rango::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.5)}
+input.rango::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#fff;border:0}
 
 /* ===================== CABECERA ===================== */
 header{position:sticky;top:0;z-index:5;background:rgba(18,16,14,.88);
   backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);
-  padding:calc(env(safe-area-inset-top) + 14px) 18px 12px;display:flex;align-items:center;gap:12px}
+  padding:calc(env(safe-area-inset-top) + 14px) 18px 12px;display:flex;align-items:center;gap:10px}
 header .titulos{flex:1;min-width:0}
 header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;letter-spacing:-.4px}
 #estadis{font-size:12px;color:var(--suave);margin-top:3px}
-.btn-mas{width:46px;height:46px;border-radius:50%;border:0;background:var(--acento);color:#1a1209;flex:none;
-  font-size:28px;font-weight:700;line-height:1;display:grid;place-items:center;box-shadow:0 6px 18px rgba(234,165,62,.35)}
+.btn-redondo{width:46px;height:46px;border-radius:50%;border:0;flex:none;display:grid;place-items:center;padding:0}
+.btn-redondo svg{width:24px;height:24px}
+#btnAjustes{background:var(--panel2)}
+#btnNuevo{background:var(--acento);color:#1a1209;font-size:28px;font-weight:700;line-height:1;box-shadow:0 6px 18px rgba(234,165,62,.35)}
 
 /* ===================== CONTINUAR ESCUCHANDO ===================== */
 #continuar{margin:6px 16px 22px;border-radius:22px;overflow:hidden;position:relative;cursor:pointer;
   box-shadow:0 16px 40px rgba(0,0,0,.5);display:none}
-.hero-fondo{position:absolute;inset:-50px;background:var(--fondo-img) center/cover;
-  filter:blur(34px) brightness(.5) saturate(1.3)}
+.hero-fondo{position:absolute;inset:-50px;background:var(--fondo-img) center/cover;filter:blur(34px) brightness(.5) saturate(1.3)}
 .hero{position:relative;display:flex;gap:16px;padding:16px;align-items:center}
 .hero .tapa{width:108px;height:108px;border-radius:12px;overflow:hidden;flex:none;box-shadow:0 10px 26px rgba(0,0,0,.55)}
 .hero .tapa > *{width:100%;height:100%}
@@ -58,17 +66,21 @@ header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;lette
 .hero .barra{background:rgba(255,255,255,.2);margin-top:7px}
 #heroPlay{width:58px;height:58px;border-radius:50%;background:var(--acento);color:#1a1209;flex:none;border:0;
   display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.4)}
-#heroPlay svg{width:28px;height:28px;fill:currentColor}
+#heroPlay svg{width:28px;height:28px}
 
-/* ===================== BUSCADOR Y FILTROS ===================== */
+/* ===================== BUSCADOR, FILTROS Y ORDEN ===================== */
 .herr{padding:0 16px;display:flex;flex-direction:column;gap:12px;margin-bottom:4px}
-.caja-busca{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--linea);border-radius:12px;padding:0 12px}
+.fila-busca{display:flex;gap:8px}
+.caja-busca{flex:1;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--linea);border-radius:12px;padding:0 12px}
 .caja-busca svg{width:18px;height:18px;fill:var(--suave);flex:none}
 .caja-busca input{border:0;background:none;padding:11px 0;border-radius:0}
-.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+#btnOrden{border:1px solid var(--linea);background:var(--panel);border-radius:12px;padding:0 12px;font-size:14px;color:var(--suave);white-space:nowrap}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;flex-wrap:nowrap}
 .chips::-webkit-scrollbar{display:none}
-.chip{border:1px solid var(--linea);background:var(--panel);border-radius:20px;padding:7px 15px;font-size:14px;white-space:nowrap;color:var(--suave)}
+.chip{border:1px solid var(--linea);background:var(--panel);border-radius:20px;padding:7px 15px;font-size:14px;white-space:nowrap;color:var(--suave);flex:none}
 .chip.on{background:var(--texto);color:var(--fondo);border-color:var(--texto);font-weight:700}
+.hoja .chip{background:var(--panel2)}
+.hoja .chip.on{background:var(--acento);border-color:var(--acento);color:#1a1209}
 .seccion{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--suave);margin:18px 16px 12px;font-weight:800}
 
 /* ===================== BIBLIOTECA ===================== */
@@ -92,7 +104,6 @@ header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;lette
 .vacio{grid-column:1/-1;text-align:center;color:var(--suave);padding:60px 24px;line-height:1.6;font-size:16px}
 .vacio .grande{font-size:64px;display:block;margin-bottom:10px}
 
-/* portada sin imagen: parece la tapa de un libro */
 .portada{object-fit:cover;display:block}
 .placeholder{display:flex;flex-direction:column;justify-content:space-between;padding:12%;color:#fff5e6;
   background:linear-gradient(150deg,#d38a35,#9a4f1a 55%,#4a230c);position:relative}
@@ -117,50 +128,64 @@ header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;lette
 #miniCap{font-size:12px;color:var(--suave);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #miniBarra{position:absolute;left:0;bottom:0;height:3px;background:var(--acento);width:0}
 .btn-icono{border:0;background:none;width:44px;height:44px;display:grid;place-items:center;padding:0}
-.btn-icono svg{width:28px;height:28px;fill:currentColor}
+.btn-icono svg{width:28px;height:28px}
 
 /* ===================== REPRODUCTOR GRANDE ===================== */
 #reproductor{position:fixed;inset:0;z-index:10;background:var(--fondo);
   transform:translateY(105%);transition:transform .35s cubic-bezier(.2,.8,.2,1);overflow-y:auto}
 #reproductor.abierto{transform:none}
 #reproductor::before{content:'';position:fixed;inset:-80px;background:var(--fondo-img) center/cover;
-  filter:blur(45px) brightness(.45) saturate(1.4);transition:background .5s}
+  filter:blur(45px) brightness(.45) saturate(1.4)}
 #reproductor::after{content:'';position:fixed;inset:0;
   background:linear-gradient(180deg,rgba(18,16,14,.15) 0%,rgba(18,16,14,.55) 55%,rgba(18,16,14,.92) 100%)}
 .rep-contenido{position:relative;z-index:1;max-width:460px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;
-  padding:calc(env(safe-area-inset-top) + 6px) 26px calc(env(safe-area-inset-bottom) + 20px)}
-.rep-arriba{display:flex;align-items:center;justify-content:space-between;height:48px}
+  padding:calc(env(safe-area-inset-top) + 4px) 24px calc(env(safe-area-inset-bottom) + 16px)}
+.tirador{width:44px;height:5px;border-radius:3px;background:rgba(255,255,255,.35);margin:4px auto 6px}
+.rep-arriba{display:flex;align-items:center;justify-content:space-between;height:44px}
 .rep-arriba button{border:0;background:rgba(255,255,255,.12);border-radius:20px;padding:8px 14px;font-size:15px;
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-#btnCerrarRep{width:44px;height:36px;padding:0;display:grid;place-items:center}
-#btnCerrarRep svg{width:22px;height:22px;fill:currentColor}
-#repPortada{width:min(80vw,340px,40vh);aspect-ratio:1;margin:18px auto 26px;border-radius:16px;overflow:hidden;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;gap:6px}
+.rep-arriba svg{width:20px;height:20px}
+#btnCerrarRep{width:44px;height:36px;padding:0;justify-content:center}
+#btnCerrarRep svg{width:24px;height:24px}
+#repPortada{width:min(78vw,330px,36vh);aspect-ratio:1;margin:14px auto 22px;border-radius:16px;overflow:hidden;
   box-shadow:0 24px 60px rgba(0,0,0,.7);flex:none;transition:transform .35s}
 #repPortada.pausado{transform:scale(.9)}
 #repPortada > *{width:100%;height:100%}
 #repPortada .placeholder{font-size:26px}
-#repTitulo{font-family:var(--serif);font-size:25px;font-weight:700;text-align:center;line-height:1.2}
+#repTitulo{font-family:var(--serif);font-size:24px;font-weight:700;text-align:center;line-height:1.2}
 #repAutor{font-size:16px;color:var(--acento);text-align:center;margin-top:5px}
-#repCap{font-size:14px;color:rgba(255,255,255,.65);text-align:center;margin-top:8px;min-height:18px}
+#repCap{font-size:14px;color:rgba(255,255,255,.65);text-align:center;margin-top:7px;min-height:18px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-#slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;margin:28px 0 9px;outline:none;
+#slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;margin:24px 0 9px;outline:none;
   background:linear-gradient(90deg,var(--acento) var(--p,0%),rgba(255,255,255,.18) var(--p,0%))}
-#slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.5)}
-#slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:0}
+#slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.5)}
+#slider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:0}
 .tiempos{display:flex;justify-content:space-between;font-size:13px;color:rgba(255,255,255,.65);font-variant-numeric:tabular-nums}
-#repTotal{text-align:center;font-size:12px;color:rgba(255,255,255,.6);margin-top:8px}
+#repTotal{text-align:center;font-size:12px;color:rgba(255,255,255,.6);margin-top:6px}
 
-.controles{display:flex;align-items:center;justify-content:space-between;margin:24px 0 10px}
+.controles{display:flex;align-items:center;justify-content:space-between;margin:20px 0 6px}
 .controles .btn-icono svg{width:30px;height:30px}
-.salto{position:relative;width:60px;height:60px}
-.salto svg{width:46px!important;height:46px!important}
+.salto{position:relative;width:62px;height:62px}
+.salto svg{width:48px!important;height:48px!important}
 .salto span{position:absolute;inset:0;display:grid;place-items:center;font-size:12px;font-weight:800;padding-top:3px}
 #btnPlay{width:84px;height:84px;border-radius:50%;background:var(--acento);color:#1a1209;box-shadow:0 10px 30px rgba(234,165,62,.45)}
 #btnPlay svg{width:40px;height:40px}
-.extras{display:flex;justify-content:center;gap:12px;margin-top:auto;padding-top:20px}
-.extras button{border:0;background:rgba(255,255,255,.12);border-radius:22px;padding:10px 16px;font-size:15px;min-width:96px;
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.extras button.activo{background:var(--acento);color:#1a1209;font-weight:700}
+
+/* volumen en el reproductor */
+.vol-fila{display:flex;align-items:center;gap:12px;margin:14px 4px 0}
+.vol-fila svg{width:22px;height:22px;flex:none;opacity:.8}
+#volTxt{font-size:12px;color:rgba(255,255,255,.65);width:48px;white-space:nowrap;flex:none;text-align:right;font-variant-numeric:tabular-nums}
+
+/* barra de herramientas del reproductor */
+.herramientas{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:auto;padding-top:22px}
+.herramientas button{border:0;background:rgba(255,255,255,.1);border-radius:16px;padding:10px 4px 8px;
+  display:flex;flex-direction:column;align-items:center;gap:4px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.herramientas svg{width:24px;height:24px}
+.herramientas b{font-size:17px;height:24px;line-height:24px}
+.herramientas span{font-size:11px;color:rgba(255,255,255,.75);white-space:nowrap}
+.herramientas button.activo{background:var(--acento);color:#1a1209}
+.herramientas button.activo span{color:#1a1209;font-weight:700}
 
 /* ===================== HOJAS (ventanas que suben) ===================== */
 .hoja{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center;
@@ -172,8 +197,8 @@ header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;lette
 .hoja.abierta .panel{transform:none}
 .asa{width:40px;height:5px;border-radius:3px;background:var(--linea);margin:0 auto 14px}
 .hoja h2{margin:0 0 16px;font-size:21px;font-family:var(--serif)}
-.campo{margin-bottom:14px}
-.campo > label{display:block;font-size:13px;color:var(--suave);margin-bottom:6px}
+.campo{margin-bottom:16px}
+.campo > label,.campo > .lbl{display:block;font-size:13px;color:var(--suave);margin-bottom:8px}
 .btn-ancho{display:block;width:100%;border:0;border-radius:12px;padding:14px;font-size:16px;font-weight:600;
   background:var(--panel2);margin-top:10px;text-align:center}
 .btn-ancho.prin{background:var(--acento);color:#1a1209}
@@ -192,7 +217,9 @@ header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;lette
   padding:14px 4px;border-bottom:1px solid var(--linea);font-size:16px;text-align:left;gap:10px}
 .opcion small{color:var(--suave);font-variant-numeric:tabular-nums;flex:none}
 .opcion.actual{color:var(--acento);font-weight:700}
+.opcion.hecho .nom{color:var(--suave)}
 .opcion .nom{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nota{font-size:12px;color:var(--suave);line-height:1.5;margin:14px 2px 0}
 
 /* buscador de carátulas */
 .busca-fila{display:flex;gap:8px}
@@ -202,6 +229,44 @@ header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;lette
 .res-car{border:0;background:var(--panel2);border-radius:10px;padding:0;overflow:hidden;position:relative}
 .res-car img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
 .res-car span{position:absolute;left:4px;bottom:4px;font-size:9px;background:rgba(0,0,0,.7);color:#fff;padding:2px 5px;border-radius:4px}
+
+/* velocidad */
+.vel-grande{display:flex;align-items:center;justify-content:center;gap:24px;margin:6px 0 20px}
+.vel-grande button{width:60px;height:60px;border-radius:50%;border:0;background:var(--panel2);font-size:30px;line-height:1}
+#velValor{font-size:44px;font-weight:800;min-width:140px;text-align:center;font-variant-numeric:tabular-nums}
+#chipsVel{flex-wrap:wrap;justify-content:center}
+
+/* sonido */
+.banda{display:grid;grid-template-columns:96px 1fr 52px;align-items:center;gap:12px;margin:14px 0}
+.banda span{font-size:14px;line-height:1.15}
+.banda span small{display:block;color:var(--suave);font-size:11px}
+.banda b{font-size:13px;text-align:right;font-variant-numeric:tabular-nums;color:var(--suave)}
+.vol-hoja{display:flex;align-items:center;gap:12px}
+.vol-hoja svg{width:22px;height:22px;flex:none;opacity:.8}
+.vol-hoja b{font-size:14px;width:56px;white-space:nowrap;flex:none;text-align:right;font-variant-numeric:tabular-nums}
+.interruptor{display:flex;align-items:center;gap:14px;padding:14px;border-radius:14px;background:var(--panel2);margin:16px 0 4px;cursor:pointer}
+.interruptor .t{flex:1}
+.interruptor .t b{display:block;font-size:16px}
+.interruptor .t small{display:block;color:var(--suave);font-size:12px;margin-top:3px;line-height:1.4}
+.interruptor input{display:none}
+.interruptor i{width:52px;height:32px;border-radius:16px;background:var(--linea);position:relative;flex:none;transition:background .2s}
+.interruptor i::after{content:'';position:absolute;left:3px;top:3px;width:26px;height:26px;border-radius:50%;background:#fff;transition:transform .2s}
+.interruptor input:checked + i{background:var(--verde)}
+.interruptor input:checked + i::after{transform:translateX(20px)}
+
+/* marcadores */
+.marca{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--linea);padding:4px 0}
+.marca .ir{flex:1;min-width:0;border:0;background:none;text-align:left;padding:10px 4px}
+.marca .ir b{display:block;font-size:15px;font-variant-numeric:tabular-nums}
+.marca .ir span{display:block;color:var(--suave);font-size:13px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.marca .quitar{border:0;background:var(--panel2);border-radius:50%;width:34px;height:34px;color:var(--suave);flex:none}
+.vacio-hoja{color:var(--suave);font-size:14px;text-align:center;padding:24px 10px;line-height:1.5}
+
+/* ajustes */
+.datos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.dato{background:var(--panel2);border-radius:14px;padding:12px}
+.dato b{display:block;font-size:20px}
+.dato span{font-size:12px;color:var(--suave)}
 
 /* ===================== AVISOS ===================== */
 #cargando{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.75);display:none;place-items:center;padding:30px}
@@ -218,16 +283,17 @@ header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;lette
 </head>
 <body>
 <div id="app">
-  <!-- ===================== CABECERA ===================== -->
   <header>
     <div class="titulos">
       <h1>Mis Audiolibros</h1>
       <div id="estadis"></div>
     </div>
-    <button class="btn-mas" id="btnNuevo" aria-label="Añadir audiolibro">+</button>
+    <button class="btn-redondo" id="btnAjustes" aria-label="Ajustes">
+      <svg viewBox="0 0 24 24"><path d="M19.4 13a7.5 7.5 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.3 7.3 0 0 0-1.7-1L15 3h-4l-.4 2.7a7.3 7.3 0 0 0-1.7 1l-2.5-1-2 3.5L6.6 11a7.5 7.5 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1a7.3 7.3 0 0 0 1.7 1L11 21h4l.4-2.7a7.3 7.3 0 0 0 1.7-1l2.5 1 2-3.5zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" transform="translate(-1 0)"/></svg>
+    </button>
+    <button class="btn-redondo" id="btnNuevo" aria-label="Añadir audiolibro">+</button>
   </header>
 
-  <!-- ===================== CONTINUAR ESCUCHANDO ===================== -->
   <section id="continuar">
     <div class="hero-fondo" id="heroFondo"></div>
     <div class="hero">
@@ -243,11 +309,13 @@ header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;lette
     </div>
   </section>
 
-  <!-- ===================== BUSCADOR Y FILTROS ===================== -->
   <div class="herr" id="herr">
-    <div class="caja-busca">
-      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 14 15.5l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg>
-      <input type="search" id="buscar" placeholder="Buscar por título o autor">
+    <div class="fila-busca">
+      <div class="caja-busca">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 14 15.5l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/></svg>
+        <input type="search" id="buscar" placeholder="Buscar por título o autor">
+      </div>
+      <button id="btnOrden">↕ Recientes</button>
     </div>
     <div class="chips" id="chips">
       <button class="chip on" data-f="todos">Todos</button>
@@ -260,7 +328,6 @@ header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;lette
   <main id="biblioteca"></main>
 </div>
 
-<!-- Mini reproductor -->
 <div id="mini">
   <div id="miniImg"></div>
   <div id="miniTxt"><div id="miniTit"></div><div id="miniCap"></div></div>
@@ -271,9 +338,10 @@ header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;lette
 <!-- ===================== REPRODUCTOR ===================== -->
 <section id="reproductor">
   <div class="rep-contenido">
+    <div class="tirador"></div>
     <div class="rep-arriba">
       <button id="btnCerrarRep" aria-label="Cerrar"><svg viewBox="0 0 24 24"><path d="M7.4 8.6 12 13.2l4.6-4.6L18 10l-6 6-6-6z"/></svg></button>
-      <button id="btnCapitulos">☰ Capítulos</button>
+      <button id="btnCapitulos"><svg viewBox="0 0 24 24"><path d="M3 6h2v2H3zm4 0h14v2H7zM3 11h2v2H3zm4 0h14v2H7zm-4 5h2v2H3zm4 0h14v2H7z"/></svg>Capítulos</button>
     </div>
     <div id="repPortada" class="pausado"></div>
     <div id="repTitulo"></div>
@@ -287,18 +355,27 @@ header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;lette
     <div class="controles">
       <button class="btn-icono" id="btnAnt" aria-label="Capítulo anterior">
         <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg></button>
-      <button class="btn-icono salto" id="btnAtras" aria-label="Atrás 15 segundos">
-        <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg><span>15</span></button>
+      <button class="btn-icono salto" id="btnAtras" aria-label="Atrás">
+        <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg><span id="txtAtras">15</span></button>
       <button class="btn-icono" id="btnPlay" aria-label="Reproducir"></button>
-      <button class="btn-icono salto" id="btnAdelante" aria-label="Adelante 30 segundos">
-        <svg viewBox="0 0 24 24"><path d="M12 5V1l5 5-5 5V7a6 6 0 1 0 6 6h2a8 8 0 1 1-8-8z"/></svg><span>30</span></button>
+      <button class="btn-icono salto" id="btnAdelante" aria-label="Adelante">
+        <svg viewBox="0 0 24 24"><path d="M12 5V1l5 5-5 5V7a6 6 0 1 0 6 6h2a8 8 0 1 1-8-8z"/></svg><span id="txtAdelante">30</span></button>
       <button class="btn-icono" id="btnSig" aria-label="Capítulo siguiente">
         <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
     </div>
 
-    <div class="extras">
-      <button id="btnVel">1×</button>
-      <button id="btnDormir">🌙 Dormir</button>
+    <div class="vol-fila">
+      <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg>
+      <input type="range" class="rango" id="volRep" min="0" max="200" step="5" value="100" aria-label="Volumen">
+      <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
+      <span id="volTxt">100 %</span>
+    </div>
+
+    <div class="herramientas">
+      <button id="btnVel"><b id="velTxt">1×</b><span>Velocidad</span></button>
+      <button id="btnDormir"><svg viewBox="0 0 24 24"><path d="M12.3 2a10 10 0 1 0 9.7 12.4A8 8 0 0 1 12.3 2z"/></svg><span id="dormirTxt">Dormir</span></button>
+      <button id="btnSonido"><svg viewBox="0 0 24 24"><path d="M6 3h2v8H6zm-2 10h6v2H8v6H6v-6H4zm7-10h2v4h-2zM9 9h6v2h-2v10h-2V11H9zm7-6h2v10h-2zm-2 12h6v2h-2v4h-2v-4h-2z"/></svg><span>Sonido</span></button>
+      <button id="btnMarcas"><svg viewBox="0 0 24 24"><path d="M6 2h12a1 1 0 0 1 1 1v19l-7-4-7 4V3a1 1 0 0 1 1-1z"/></svg><span>Marcadores</span></button>
     </div>
   </div>
 </section>
@@ -332,7 +409,7 @@ header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;lette
 <div class="hoja" id="hojaEditar"><div class="panel">
   <div class="asa"></div>
   <h2>Editar libro</h2>
-  <div id="edInfo" style="color:var(--suave);font-size:13px;margin:-8px 0 14px"></div>
+  <div id="edInfo" style="color:var(--suave);font-size:13px;margin:-8px 0 14px;line-height:1.5"></div>
   <div class="campo"><label>Título</label><input type="text" id="edTitulo"></div>
   <div class="campo"><label>Autor</label><input type="text" id="edAutor"></div>
   <div class="campo"><label>Carátula</label>
@@ -345,6 +422,7 @@ header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;lette
     </div>
   </div>
   <button class="btn-ancho prin" id="btnEdGuardar">Guardar cambios</button>
+  <button class="btn-ancho" id="btnEdTerminado">Marcar como terminado</button>
   <button class="btn-ancho" id="btnEdReiniciar">Empezar desde el principio</button>
   <button class="btn-ancho peligro" id="btnEdBorrar">Borrar libro</button>
   <button class="btn-ancho" data-cerrar="#hojaEditar">Cancelar</button>
@@ -371,6 +449,20 @@ header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;lette
   <button class="btn-ancho" data-cerrar="#hojaCapitulos">Cerrar</button>
 </div></div>
 
+<!-- ===================== HOJA: VELOCIDAD ===================== -->
+<div class="hoja" id="hojaVel"><div class="panel">
+  <div class="asa"></div>
+  <h2>Velocidad de lectura</h2>
+  <div class="vel-grande">
+    <button id="velMenos" aria-label="Más lento">−</button>
+    <div id="velValor">1,00×</div>
+    <button id="velMas" aria-label="Más rápido">+</button>
+  </div>
+  <div class="chips" id="chipsVel"></div>
+  <p class="nota">Cada libro recuerda su propia velocidad. La voz no se vuelve aguda al acelerar.</p>
+  <button class="btn-ancho" data-cerrar="#hojaVel">Listo</button>
+</div></div>
+
 <!-- ===================== HOJA: TEMPORIZADOR ===================== -->
 <div class="hoja" id="hojaDormir"><div class="panel">
   <div class="asa"></div>
@@ -380,14 +472,64 @@ header h1{font-family:var(--serif);font-size:32px;margin:0;font-weight:700;lette
   <button class="opcion" data-min="30">30 minutos</button>
   <button class="opcion" data-min="45">45 minutos</button>
   <button class="opcion" data-min="60">1 hora</button>
+  <button class="opcion" data-min="90">1 hora y media</button>
   <button class="opcion" data-min="cap">Al terminar el capítulo</button>
   <button class="opcion" data-min="0" style="color:var(--peligro)">Desactivar temporizador</button>
 </div></div>
 
+<!-- ===================== HOJA: SONIDO ===================== -->
+<div class="hoja" id="hojaSonido"><div class="panel">
+  <div class="asa"></div>
+  <h2>Sonido</h2>
+  <div class="campo">
+    <div class="lbl">Volumen (hasta 200 % para voces bajitas)</div>
+    <div class="vol-hoja">
+      <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg>
+      <input type="range" class="rango" id="volSon" min="0" max="200" step="5" value="100">
+      <b id="volSonTxt">100 %</b>
+    </div>
+  </div>
+  <div class="campo">
+    <div class="lbl">Ecualizador</div>
+    <div class="chips" id="chipsEq"></div>
+    <div id="bandas"></div>
+  </div>
+  <label class="interruptor">
+    <span class="t"><b>Igualar volumen</b><small>Sube las partes que se oyen bajito y baja las fuertes. Muy útil en el coche, andando por la calle o con ruido.</small></span>
+    <input type="checkbox" id="chkComp"><i></i>
+  </label>
+  <button class="btn-ancho" id="btnSonReset">Restablecer (sonido original)</button>
+  <p class="nota">ℹ️ En el iPhone, el volumen extra y el ecualizador usan un procesador de sonido. En algunos iPhone el audio se para al bloquear la pantalla mientras está encendido. Si te pasa, pulsa <b>Restablecer</b> y se escuchará con la pantalla bloqueada como siempre. Los botones de volumen del lateral del iPhone funcionan siempre.</p>
+  <button class="btn-ancho" data-cerrar="#hojaSonido">Listo</button>
+</div></div>
+
+<!-- ===================== HOJA: MARCADORES ===================== -->
+<div class="hoja" id="hojaMarcas"><div class="panel">
+  <div class="asa"></div>
+  <h2>Marcadores</h2>
+  <div class="busca-fila">
+    <input type="text" id="notaMarca" placeholder="Nota (opcional): «me gustó esta parte»">
+    <button class="btn-buscar" id="btnAddMarca">＋ Marcar</button>
+  </div>
+  <div id="listaMarcas" style="margin-top:10px"></div>
+  <button class="btn-ancho" data-cerrar="#hojaMarcas">Cerrar</button>
+</div></div>
+
+<!-- ===================== HOJA: AJUSTES ===================== -->
+<div class="hoja" id="hojaAjustes"><div class="panel">
+  <div class="asa"></div>
+  <h2>Ajustes</h2>
+  <div class="datos" id="datos"></div>
+  <div class="campo"><div class="lbl">Botón de retroceder</div><div class="chips" id="chipsAtras"></div></div>
+  <div class="campo"><div class="lbl">Botón de avanzar</div><div class="chips" id="chipsAdelante"></div></div>
+  <div class="campo"><div class="lbl">Al reanudar tras una pausa, retroceder unos segundos (para no perder el hilo)</div><div class="chips" id="chipsRebobinar"></div></div>
+  <button class="btn-ancho" id="btnFaltan">🔍 Buscar las carátulas que falten</button>
+  <p class="nota">Los libros se guardan dentro de este aparato. Si borras el icono de la app de la pantalla de inicio, se borran también los libros.</p>
+  <button class="btn-ancho" data-cerrar="#hojaAjustes">Listo</button>
+</div></div>
+
 <div id="cargando"><div class="caja"><div class="rueda"></div><div id="cargandoTxt"></div></div></div>
 <div id="aviso"></div>
-
-<audio id="audio" preload="auto" playsinline></audio>
 
 <script>
 'use strict';
@@ -408,6 +550,8 @@ function fmtLargo(s) {
   return h ? `${h} h ${m} min` : `${m} min`;
 }
 function fmtMB(b) { return b > 1e9 ? (b / 1e9).toFixed(1).replace('.', ',') + ' GB' : Math.round(b / 1e6) + ' MB'; }
+const fmtVel = v => v.toFixed(2).replace('.', ',') + '×';
+const fmtVelCorto = v => String(+v.toFixed(2)).replace('.', ',') + '×';
 function nombreLimpio(n) { return n.replace(/\.[^.]+$/, '').replace(/_+/g, ' ').trim(); }
 function iniciales(t) { return (t || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join(''); }
 function sinAcentos(t) { return (t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
@@ -417,14 +561,25 @@ function tipoAudio(f) {
   return { mp3: 'audio/mpeg', m4a: 'audio/mp4', m4b: 'audio/mp4', aac: 'audio/aac',
            wav: 'audio/wav', ogg: 'audio/ogg', flac: 'audio/flac' }[ext] || 'audio/mpeg';
 }
+function leerJSON(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }
+function guardarJSON(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 let tAviso;
-function aviso(txt) {
+function aviso(txt, ms = 2600) {
   const a = $('#aviso'); a.textContent = txt; a.classList.add('visible');
-  clearTimeout(tAviso); tAviso = setTimeout(() => a.classList.remove('visible'), 2600);
+  clearTimeout(tAviso); tAviso = setTimeout(() => a.classList.remove('visible'), ms);
 }
+function rellenar(r) { r.style.setProperty('--p', ((r.value - r.min) / (r.max - r.min) * 100) + '%'); }
 
 /* =====================================================================
-   2. BASE DE DATOS (IndexedDB, dentro del propio iPhone)
+   2. AJUSTES (se guardan en el aparato)
+   ===================================================================== */
+const AJ_DEF = { atras: 15, adelante: 30, rebobinar: 0, orden: 'recientes',
+                 eq: [0, 0, 0, 0, 0], preset: 'normal', vol: 1, compresor: false };
+const ajustes = Object.assign({}, AJ_DEF, leerJSON('ajustes') || {});
+const guardarAjustes = () => guardarJSON('ajustes', ajustes);
+
+/* =====================================================================
+   3. BASE DE DATOS (IndexedDB)
    ===================================================================== */
 let db;
 function abrirDB() {
@@ -456,9 +611,7 @@ const dbPut   = (a, obj) => operacion(a, 'readwrite', s => s.put(obj));
 const dbDel   = (a, id)  => operacion(a, 'readwrite', s => s.delete(id));
 
 /* =====================================================================
-   3. LEER ETIQUETAS DE LOS ARCHIVOS (título, autor y carátula incrustada)
-      - MP3: etiquetas ID3
-      - M4B / M4A (lo normal en audiolibros): "átomos" MP4
+   4. LEER ETIQUETAS DE LOS ARCHIVOS (MP3 = ID3, M4B/M4A = átomos MP4)
    ===================================================================== */
 function syncsafe(b, i) { return (b[i] & 0x7f) << 21 | (b[i+1] & 0x7f) << 14 | (b[i+2] & 0x7f) << 7 | (b[i+3] & 0x7f); }
 function textoID3(d) {
@@ -498,8 +651,6 @@ async function leerID3(file) {
     return out;
   } catch (e) { return {}; }
 }
-
-// Recorre las "cajas" de un archivo MP4: [tamaño 4 bytes][tipo 4 letras][contenido]
 function leerCajas(buf, ini, fin) {
   const v = new DataView(buf.buffer, buf.byteOffset, buf.byteLength);
   const out = [];
@@ -519,7 +670,6 @@ async function leerMP4(file) {
   try {
     const ftyp = new Uint8Array(await file.slice(4, 8).arrayBuffer());
     if (String.fromCharCode(...ftyp) !== 'ftyp') return {};
-    // Busca la caja "moov" (donde están las etiquetas), que puede estar al principio o al final
     let p = 0, moov = null;
     const n = file.size;
     while (p + 8 <= n) {
@@ -559,7 +709,6 @@ async function leerEtiquetas(file) {
   const id3 = await leerID3(file);
   return Object.keys(id3).length ? id3 : await leerMP4(file);
 }
-
 function getDuracion(blob) {
   return new Promise(res => {
     const a = new Audio(), url = URL.createObjectURL(blob);
@@ -572,7 +721,6 @@ function getDuracion(blob) {
     a.src = url;
   });
 }
-
 function reducirImagen(blob, max = 600) {
   return new Promise(res => {
     const u = URL.createObjectURL(blob), im = new Image();
@@ -590,8 +738,7 @@ function reducirImagen(blob, max = 600) {
 }
 
 /* =====================================================================
-   4. BUSCAR CARÁTULAS EN INTERNET
-      Fuentes gratuitas: Apple Books (audiolibros y libros), Google Books y Open Library
+   5. BUSCAR CARÁTULAS EN INTERNET
    ===================================================================== */
 function fetchTiempo(url, ms = 9000) {
   const ctl = new AbortController();
@@ -599,8 +746,6 @@ function fetchTiempo(url, ms = 9000) {
   return fetch(url, { signal: ctl.signal }).finally(() => clearTimeout(t));
 }
 const fetchJSON = (url, ms) => fetchTiempo(url, ms).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
-
-// Apple se consulta con "JSONP": se carga la respuesta como si fuera un script
 function jsonp(url, ms = 9000) {
   return new Promise((res, rej) => {
     const cb = 'cbItunes' + uid();
@@ -613,7 +758,6 @@ function jsonp(url, ms = 9000) {
     document.head.appendChild(s);
   });
 }
-
 function limpiarTitulo(t) {
   return (t || '')
     .replace(/[\(\[].*?[\)\]]/g, ' ')
@@ -622,7 +766,6 @@ function limpiarTitulo(t) {
     .replace(/[_]+/g, ' ').replace(/\s+-\s*$/, '')
     .replace(/\s+/g, ' ').trim();
 }
-
 async function buscarCaratulas(consulta) {
   const q = encodeURIComponent(consulta);
   const apple = (media, campo) =>
@@ -642,7 +785,6 @@ async function buscarCaratulas(consulta) {
         url: `https://covers.openlibrary.org/b/id/${x.cover_i}-L.jpg`, titulo: x.title || '', fuente: 'Open Library' }))),
     apple('ebook', 'trackName')
   ]);
-  // Mezcla los resultados de todas las fuentes, sin repetir
   const res = listas.map(r => r.status === 'fulfilled' ? r.value : []);
   const todos = [], vistos = new Set();
   for (let i = 0; i < 12; i++)
@@ -650,7 +792,6 @@ async function buscarCaratulas(consulta) {
       if (l[i] && !vistos.has(l[i].url)) { vistos.add(l[i].url); todos.push(l[i]); }
   return todos;
 }
-
 function probarImagen(url) {
   return new Promise(res => {
     const im = new Image();
@@ -660,7 +801,6 @@ function probarImagen(url) {
     im.src = url;
   });
 }
-// Intenta guardar la imagen dentro de la app; si el servidor no deja, guarda su dirección
 async function descargarImagen(url) {
   try {
     const r = await fetchTiempo(url, 10000);
@@ -672,7 +812,6 @@ async function descargarImagen(url) {
     return (await probarImagen(url)) ? { url } : {};
   }
 }
-
 async function aplicarCaratula(l, d) {
   if (!d || (!d.blob && !d.url)) return false;
   if (d.blob) { l.portada = d.reducida ? d.blob : await reducirImagen(d.blob); l.portadaUrl = null; }
@@ -680,8 +819,6 @@ async function aplicarCaratula(l, d) {
   olvidarPortada(l.id);
   return true;
 }
-
-// Busca sola la carátula de un libro y se queda con la primera que funcione
 async function caratulaAutomatica(l) {
   l.caratulaBuscada = true;
   try {
@@ -696,19 +833,19 @@ async function caratulaAutomatica(l) {
   await dbPut('libros', l).catch(() => {});
   return !!(l.portada || l.portadaUrl);
 }
-
-// Al abrir la app, busca carátula a los libros que no tengan
-async function completarCaratulas() {
-  if (!navigator.onLine) return;
-  for (const l of libros.filter(x => !x.portada && !x.portadaUrl && !x.caratulaBuscada)) {
+async function completarCaratulas(forzar) {
+  if (!navigator.onLine) return 0;
+  let n = 0;
+  for (const l of libros.filter(x => !x.portada && !x.portadaUrl && (forzar || !x.caratulaBuscada))) {
     if (await caratulaAutomatica(l)) {
+      n++;
       pintarBiblioteca(); pintarContinuar();
       if (libro && libro.id === l.id) { pintarReproductor(); ponerMetadatos(); }
     }
   }
+  return n;
 }
 
-// ---- Ventana para elegir carátula a mano ----
 let alElegirCaratula = null;
 function abrirBuscadorCaratula(consulta, cb) {
   alElegirCaratula = cb;
@@ -748,7 +885,7 @@ $('#btnQCaratula').onclick = lanzarBusqueda;
 $('#qCaratula').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); lanzarBusqueda(); } });
 
 /* =====================================================================
-   5. PORTADAS Y PROGRESO
+   6. PORTADAS Y PROGRESO
    ===================================================================== */
 const urlsPortada = new Map();
 function urlPortada(l) {
@@ -763,7 +900,6 @@ function olvidarPortada(id) {
   const u = urlsPortada.get(id);
   if (u) { URL.revokeObjectURL(u); urlsPortada.delete(id); }
 }
-// pequeña = true → solo iniciales (para el mini reproductor)
 function elPortada(l, pequena) {
   const u = urlPortada(l);
   if (u) {
@@ -783,7 +919,6 @@ function phPortada(l, pequena) {
   return d;
 }
 function fondoDe(l) { const u = l && urlPortada(l); return u ? `url("${u}")` : 'linear-gradient(135deg,#8a4b1c,#2a1a0f)'; }
-
 function totalLibro(l) { return l.capitulos.reduce((a, c) => a + (c.duracion || 0), 0); }
 function escuchado(l, pos) {
   let s = 0;
@@ -795,37 +930,47 @@ function porcentaje(l, pos) {
   const t = totalLibro(l);
   return t ? Math.min(100, Math.round(escuchado(l, pos) / t * 100)) : 0;
 }
+function posDe(l) { return (libro && libro.id === l.id) ? posicionActual() : null; }
 function estado(l) {
   if (l.terminado) return 'fin';
-  const pos = (libro && libro.id === l.id) ? posicionActual() : null;
-  return escuchado(l, pos) > 5 ? 'curso' : 'nuevos';
+  return escuchado(l, posDe(l)) > 5 ? 'curso' : 'nuevos';
 }
 
 /* =====================================================================
-   6. BIBLIOTECA
+   7. BIBLIOTECA
    ===================================================================== */
 let libros = [];
 let filtro = 'todos';
-function leerLocal(id) { try { return JSON.parse(localStorage.getItem('pos_' + id)); } catch (e) { return null; } }
+const ORDENES = { recientes: 'Recientes', titulo: 'Título', autor: 'Autor', progreso: 'Progreso' };
 
 async function cargarBiblioteca() {
   libros = await dbTodos('libros');
   for (const l of libros) {
-    const g = leerLocal(l.id);
+    const g = leerJSON('pos_' + l.id);
     if (g && g.t > (l.actualizado || 0) && g.cap < l.capitulos.length) { l.cap = g.cap; l.pos = g.pos; l.actualizado = g.t; }
   }
   if (libro) { const i = libros.findIndex(x => x.id === libro.id); if (i >= 0) libros[i] = libro; }
-  libros.sort((a, b) => (b.actualizado || 0) - (a.actualizado || 0));
   pintarBiblioteca();
   pintarContinuar();
   pintarMini();
   mostrarEstadis();
 }
 
+function ordenar(lista) {
+  const cmp = new Intl.Collator('es', { numeric: true, sensitivity: 'base' }).compare;
+  const o = ajustes.orden;
+  return lista.sort((a, b) =>
+    o === 'titulo' ? cmp(a.titulo, b.titulo) :
+    o === 'autor' ? cmp(a.autor || '~', b.autor || '~') || cmp(a.titulo, b.titulo) :
+    o === 'progreso' ? porcentaje(b, posDe(b)) - porcentaje(a, posDe(a)) :
+    (b.actualizado || 0) - (a.actualizado || 0));
+}
+
 function pintarBiblioteca() {
   const cont = $('#biblioteca');
   cont.innerHTML = '';
   $('#herr').style.display = libros.length > 1 ? '' : 'none';
+  $('#btnOrden').textContent = '↕ ' + ORDENES[ajustes.orden];
   if (!libros.length) {
     $('#tituloSeccion').style.display = 'none';
     cont.innerHTML = '<div class="vacio"><span class="grande">🎧</span>Tu biblioteca está vacía.<br>Pulsa <b>+</b> para añadir tu primer audiolibro.</div>';
@@ -833,9 +978,9 @@ function pintarBiblioteca() {
   }
   $('#tituloSeccion').style.display = '';
   const q = sinAcentos($('#buscar').value.trim());
-  const lista = libros.filter(l =>
+  const lista = ordenar(libros.filter(l =>
     (filtro === 'todos' || estado(l) === filtro) &&
-    (!q || sinAcentos(l.titulo + ' ' + (l.autor || '')).includes(q)));
+    (!q || sinAcentos(l.titulo + ' ' + (l.autor || '')).includes(q))));
   $('#tituloSeccion').textContent = { todos: 'Mi biblioteca', curso: 'Escuchando', nuevos: 'Sin empezar', fin: 'Terminados' }[filtro]
     + ` · ${lista.length}`;
   if (!lista.length) { cont.innerHTML = '<div class="vacio">No hay libros que coincidan.</div>'; return; }
@@ -855,12 +1000,10 @@ function pintarBiblioteca() {
     const mas = document.createElement('button'); mas.className = 'mas'; mas.textContent = '⋯'; mas.setAttribute('aria-label', 'Opciones');
     mas.onclick = e => { e.stopPropagation(); abrirEditar(l.id); };
     tapa.appendChild(mas);
-
     const t = document.createElement('div'); t.className = 'tit'; t.textContent = l.titulo;
     const a = document.createElement('div'); a.className = 'aut'; a.textContent = l.autor || 'Autor desconocido';
     card.append(tapa, t, a);
-    const pos = (libro && libro.id === l.id) ? posicionActual() : null;
-    const p = porcentaje(l, pos);
+    const pos = posDe(l), p = porcentaje(l, pos);
     const pc = document.createElement('div'); pc.className = 'pct';
     if (est === 'curso') {
       const b = document.createElement('div'); b.className = 'barra';
@@ -874,22 +1017,28 @@ function pintarBiblioteca() {
   }
 }
 
+const tiempoEscuchadoTotal = () => libros.reduce((s, l) => s + (l.escuchadoSeg || 0), 0);
 function mostrarEstadis() {
   const horas = libros.reduce((s, l) => s + totalLibro(l), 0);
-  const base = libros.length ? `${libros.length} libro${libros.length === 1 ? '' : 's'} · ${fmtLargo(horas)} de audio` : 'Tu biblioteca de audiolibros';
-  $('#estadis').textContent = base;
-  if (libros.length && navigator.storage && navigator.storage.estimate)
-    navigator.storage.estimate().then(e => { $('#estadis').textContent = base + ' · ' + fmtMB(e.usage || 0); }).catch(() => {});
+  $('#estadis').textContent = libros.length
+    ? `${libros.length} libro${libros.length === 1 ? '' : 's'} · ${fmtLargo(horas)} de audio`
+    : 'Tu biblioteca de audiolibros';
 }
 
 $('#buscar').addEventListener('input', pintarBiblioteca);
-document.querySelectorAll('.chip').forEach(c => c.onclick = () => {
+document.querySelectorAll('#chips .chip').forEach(c => c.onclick = () => {
   filtro = c.dataset.f;
-  document.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x === c));
+  document.querySelectorAll('#chips .chip').forEach(x => x.classList.toggle('on', x === c));
   pintarBiblioteca();
 });
+$('#btnOrden').onclick = () => {
+  const k = Object.keys(ORDENES);
+  ajustes.orden = k[(k.indexOf(ajustes.orden) + 1) % k.length];
+  guardarAjustes();
+  pintarBiblioteca();
+  aviso('Ordenado por ' + ORDENES[ajustes.orden].toLowerCase(), 1500);
+};
 
-// ---- Tarjeta "Continuar escuchando" ----
 function pintarContinuar() {
   const c = $('#continuar');
   if (!libro) { c.style.display = 'none'; return; }
@@ -905,10 +1054,9 @@ $('#continuar').onclick = () => abrirReproductor();
 $('#heroPlay').onclick = e => { e.stopPropagation(); alternar(); };
 
 /* =====================================================================
-   7. AÑADIR UN LIBRO NUEVO
+   8. AÑADIR UN LIBRO NUEVO
    ===================================================================== */
-let nuevosArchivos = [], nuevaPortada = null;   // nuevaPortada = {blob} o {url}
-
+let nuevosArchivos = [], nuevaPortada = null;
 function mostrarPrev(caja, p) {
   const c = $(caja); c.innerHTML = '';
   const src = p instanceof Blob ? URL.createObjectURL(p) : (p && p.blob ? URL.createObjectURL(p.blob) : (p && p.url) || p);
@@ -921,9 +1069,7 @@ function limpiarNuevo() {
   $('#inTitulo').value = ''; $('#inAutor').value = '';
   $('#listaNuevos').textContent = ''; mostrarPrev('#prevNueva', null);
 }
-
 $('#btnNuevo').onclick = () => { limpiarNuevo(); abrirHoja('#hojaNuevo'); };
-
 $('#inArchivos').onchange = async e => {
   nuevosArchivos = [...e.target.files].sort((a, b) => a.name.localeCompare(b.name, 'es', { numeric: true }));
   $('#listaNuevos').textContent = nuevosArchivos.length
@@ -944,7 +1090,6 @@ $('#btnBuscarNueva').onclick = () => {
   const a = $('#inAutor').value.trim();
   abrirBuscadorCaratula(a && !/audio\s*libro/i.test(a) ? t + ' ' + a : t, d => { nuevaPortada = d; mostrarPrev('#prevNueva', d); });
 };
-
 $('#btnGuardarNuevo').onclick = async () => {
   if (!nuevosArchivos.length) { alert('Elige al menos un archivo de audio.'); return; }
   const titulo = $('#inTitulo').value.trim() || nombreLimpio(nuevosArchivos[0].name);
@@ -957,7 +1102,7 @@ $('#btnGuardarNuevo').onclick = async () => {
   let nuevo = null;
   try {
     const ahora = Date.now();
-    nuevo = { id: uid(), titulo, autor, portada: null, portadaUrl: null,
+    nuevo = { id: uid(), titulo, autor, portada: null, portadaUrl: null, marcadores: [], escuchadoSeg: 0,
               capitulos: [], cap: 0, pos: 0, velocidad: 1, creado: ahora, actualizado: ahora, terminado: false };
     if (portada) await aplicarCaratula(nuevo, portada);
     for (let i = 0; i < archivos.length; i++) {
@@ -987,17 +1132,18 @@ $('#btnGuardarNuevo').onclick = async () => {
 };
 
 /* =====================================================================
-   8. EDITAR / REINICIAR / BORRAR
+   9. EDITAR / TERMINADO / REINICIAR / BORRAR
    ===================================================================== */
 let editId = null, editPortada = null;
 const objLibro = id => (libro && libro.id === id) ? libro : libros.find(x => x.id === id);
-
 function abrirEditar(id) {
   const l = objLibro(id); if (!l) return;
   editId = id; editPortada = null;
   $('#edTitulo').value = l.titulo; $('#edAutor').value = l.autor || '';
   $('#edPortada').value = '';
-  $('#edInfo').textContent = `${l.capitulos.length} archivo(s) · ${fmtLargo(totalLibro(l))} en total`;
+  $('#edInfo').textContent = `${l.capitulos.length} archivo(s) · ${fmtLargo(totalLibro(l))} en total · `
+    + `has escuchado ${fmtLargo(l.escuchadoSeg || 0)} · ${(l.marcadores || []).length} marcador(es)`;
+  $('#btnEdTerminado').textContent = l.terminado ? 'Marcar como no terminado' : 'Marcar como terminado';
   mostrarPrev('#prevEditar', urlPortada(l));
   abrirHoja('#hojaEditar');
 }
@@ -1006,7 +1152,6 @@ $('#btnBuscarEditar').onclick = () => {
   const t = $('#edTitulo').value.trim(), a = $('#edAutor').value.trim();
   abrirBuscadorCaratula(a && !/audio\s*libro/i.test(a) ? t + ' ' + a : t, d => { editPortada = d; mostrarPrev('#prevEditar', d); });
 };
-
 $('#btnEdGuardar').onclick = async () => {
   const l = objLibro(editId); if (!l) return;
   l.titulo = $('#edTitulo').value.trim() || l.titulo;
@@ -1018,7 +1163,14 @@ $('#btnEdGuardar').onclick = async () => {
   await cargarBiblioteca();
   aviso('Cambios guardados');
 };
-
+$('#btnEdTerminado').onclick = async () => {
+  const l = objLibro(editId); if (!l) return;
+  l.terminado = !l.terminado;
+  await dbPut('libros', l);
+  cerrarHoja('#hojaEditar');
+  if (libro && libro.id === l.id) pintarReproductor();
+  cargarBiblioteca();
+};
 $('#btnEdReiniciar').onclick = async () => {
   const l = objLibro(editId); if (!l) return;
   l.cap = 0; l.pos = 0; l.terminado = false; l.actualizado = Date.now();
@@ -1028,7 +1180,6 @@ $('#btnEdReiniciar').onclick = async () => {
   await dbPut('libros', l);
   cargarBiblioteca();
 };
-
 $('#btnEdBorrar').onclick = async () => {
   const l = objLibro(editId); if (!l) return;
   if (!confirm(`¿Borrar «${l.titulo}» y sus archivos de audio?\nNo se puede deshacer.`)) return;
@@ -1047,9 +1198,9 @@ $('#btnEdBorrar').onclick = async () => {
 };
 
 /* =====================================================================
-   9. REPRODUCTOR Y GUARDADO DEL PUNTO EXACTO
+   10. REPRODUCTOR Y GUARDADO DEL PUNTO EXACTO
    ===================================================================== */
-const audio = $('#audio');
+let audio = null;            // el reproductor de audio (se crea más abajo)
 let libro = null;
 let urlAudio = null;
 let posPendiente = null;
@@ -1057,20 +1208,21 @@ let objetivo = null;
 let arrastrando = false;
 let ultimoGuardado = 0;
 let finTemporizador = 0, temporizadorCap = false;
+let pausadoEn = 0;           // cuándo se pausó (para el rebobinado al reanudar)
+let ultimoTick = 0;          // para contar el tiempo escuchado
 
 const ICO_PLAY  = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
 const ICO_PAUSA = '<svg viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>';
 
 function duracionCap() {
-  if (isFinite(audio.duration) && audio.duration > 0) return audio.duration;
+  if (audio && isFinite(audio.duration) && audio.duration > 0) return audio.duration;
   return libro ? (libro.capitulos[libro.cap].duracion || 0) : 0;
 }
 function posicionActual() {
   if (posPendiente != null) return posPendiente;
   if (objetivo != null) return objetivo;
-  return audio.currentTime || 0;
+  return (audio && audio.currentTime) || 0;
 }
-
 function guardarPos(forzar) {
   if (!libro) return;
   const ahora = Date.now();
@@ -1078,10 +1230,8 @@ function guardarPos(forzar) {
   ultimoGuardado = ahora;
   libro.pos = posicionActual();
   libro.actualizado = ahora;
-  try {
-    localStorage.setItem('pos_' + libro.id, JSON.stringify({ cap: libro.cap, pos: libro.pos, t: ahora }));
-    localStorage.setItem('ultimoLibro', libro.id);
-  } catch (e) {}
+  guardarJSON('pos_' + libro.id, { cap: libro.cap, pos: libro.pos, t: ahora });
+  try { localStorage.setItem('ultimoLibro', libro.id); } catch (e) {}
   dbPut('libros', libro).catch(() => {});
 }
 
@@ -1091,8 +1241,10 @@ async function abrirLibro(id, mostrar) {
     const l = libros.find(x => x.id === id) || await dbGet('libros', id);
     if (!l) return;
     libro = l;
+    if (!libro.marcadores) libro.marcadores = [];
     if (libro.cap >= libro.capitulos.length) { libro.cap = 0; libro.pos = 0; }
     quitarTemporizador();
+    pausadoEn = libro.actualizado || 0;
     await cargarCapitulo(libro.cap, libro.pos || 0, false);
     pintarBiblioteca();
     pintarContinuar();
@@ -1143,7 +1295,11 @@ function saltarA(t) {
 async function alternar() {
   if (!libro) return;
   if (audio.paused) {
+    prepararSonido();                       // enciende el ecualizador si hace falta (necesita un toque)
     if (libro.terminado) { libro.terminado = false; await cargarCapitulo(0, 0, true); return; }
+    // Rebobinado al reanudar: si llevaba un rato en pausa, retrocede unos segundos
+    if (ajustes.rebobinar && pausadoEn && Date.now() - pausadoEn > 10000)
+      saltarA(posicionActual() - ajustes.rebobinar);
     try { await audio.play(); } catch (e) {}
   } else audio.pause();
 }
@@ -1155,61 +1311,229 @@ async function irCapitulo(i, reproducir) {
   await cargarCapitulo(i, 0, reproducir);
 }
 
-audio.addEventListener('loadedmetadata', () => {
-  aplicarPendiente();
-  if (libro) {
-    audio.playbackRate = libro.velocidad || 1;
-    const c = libro.capitulos[libro.cap];
-    if (isFinite(audio.duration) && Math.abs((c.duracion || 0) - audio.duration) > 1) {
-      c.duracion = audio.duration;
+// ---- Eventos del audio (se enganchan cada vez que se crea el reproductor) ----
+const EVENTOS = {
+  loadedmetadata() {
+    aplicarPendiente();
+    if (libro) {
+      audio.playbackRate = libro.velocidad || 1;
+      const c = libro.capitulos[libro.cap];
+      if (isFinite(audio.duration) && Math.abs((c.duracion || 0) - audio.duration) > 1) {
+        c.duracion = audio.duration;
+        guardarPos(true);
+      }
+    }
+    pintarTiempo();
+  },
+  playing() {
+    aplicarPendiente();
+    if (objetivo != null) {
+      if (Math.abs(audio.currentTime - objetivo) > 2) audio.currentTime = objetivo;
+      objetivo = null;
+    }
+    if (libro) audio.playbackRate = libro.velocidad || 1;
+    pintarBotonPlay();
+  },
+  play() {
+    if (actx && actx.state !== 'running') actx.resume().catch(() => {});
+    pintarBotonPlay();
+  },
+  seeked() {
+    if (objetivo != null && Math.abs(audio.currentTime - objetivo) < 2) objetivo = null;
+    guardarPos(true);
+  },
+  timeupdate() {
+    if (!libro) return;
+    const ahora = performance.now();
+    if (!audio.paused && ultimoTick && ahora - ultimoTick < 3000) libro.escuchadoSeg = (libro.escuchadoSeg || 0) + (ahora - ultimoTick) / 1000;
+    ultimoTick = audio.paused ? 0 : ahora;
+    if (!arrastrando) pintarTiempo();
+    guardarPos(false);
+    actualizarPosicionMS();
+    comprobarTemporizador();
+  },
+  pause() { pausadoEn = Date.now(); ultimoTick = 0; guardarPos(true); pintarBotonPlay(); },
+  async ended() {
+    if (!libro) return;
+    const sig = libro.cap + 1;
+    if (sig < libro.capitulos.length) {
+      const seguir = !temporizadorCap;
+      if (temporizadorCap) quitarTemporizador();
+      await cargarCapitulo(sig, 0, seguir);
+    } else {
+      libro.terminado = true;
       guardarPos(true);
+      pintarReproductor();
+      pintarBiblioteca();
+      aviso('🎉 ¡Has terminado el libro!', 3500);
     }
   }
-  pintarTiempo();
-});
-audio.addEventListener('playing', () => {
-  aplicarPendiente();
-  if (objetivo != null) {
-    if (Math.abs(audio.currentTime - objetivo) > 2) audio.currentTime = objetivo;
-    objetivo = null;
-  }
-  if (libro) audio.playbackRate = libro.velocidad || 1;
-  pintarBotonPlay();
-});
-audio.addEventListener('seeked', () => {
-  if (objetivo != null && Math.abs(audio.currentTime - objetivo) < 2) objetivo = null;
-  guardarPos(true);
-});
-audio.addEventListener('timeupdate', () => {
-  if (!libro) return;
-  if (!arrastrando) pintarTiempo();
-  guardarPos(false);
-  actualizarPosicionMS();
-  comprobarTemporizador();
-});
-audio.addEventListener('play',  pintarBotonPlay);
-audio.addEventListener('pause', () => { guardarPos(true); pintarBotonPlay(); });
-audio.addEventListener('ended', async () => {
-  if (!libro) return;
-  const sig = libro.cap + 1;
-  if (sig < libro.capitulos.length) {
-    const seguir = !temporizadorCap;
-    if (temporizadorCap) quitarTemporizador();
-    await cargarCapitulo(sig, 0, seguir);
-  } else {
-    libro.terminado = true;
-    guardarPos(true);
-    pintarReproductor();
-    pintarBiblioteca();
-  }
-});
+};
+function crearAudio() {
+  const a = document.createElement('audio');
+  a.preload = 'auto';
+  a.setAttribute('playsinline', '');
+  document.body.appendChild(a);
+  for (const [ev, fn] of Object.entries(EVENTOS)) a.addEventListener(ev, fn);
+  return a;
+}
 
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') guardarPos(true); });
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') guardarPos(true);
+  else if (actx && actx.state !== 'running' && audio && !audio.paused) actx.resume().catch(() => {});
+});
 window.addEventListener('pagehide', () => guardarPos(true));
 window.addEventListener('beforeunload', () => guardarPos(true));
 
 /* =====================================================================
-   10. PINTAR EL REPRODUCTOR
+   11. SONIDO: VOLUMEN, ECUALIZADOR E IGUALAR VOLUMEN
+       Camino del sonido:  audio → 5 filtros → compresor → volumen → altavoz
+       Solo se enciende si hace falta; si todo está "normal", el audio va directo.
+   ===================================================================== */
+const BANDAS = [
+  { f: 60,    nom: 'Graves',   sub: '60 Hz' },
+  { f: 250,   nom: 'Cuerpo',   sub: '250 Hz' },
+  { f: 1000,  nom: 'Voz',      sub: '1 kHz' },
+  { f: 4000,  nom: 'Claridad', sub: '4 kHz' },
+  { f: 12000, nom: 'Agudos',   sub: '12 kHz' }
+];
+const PRESETS = {
+  normal:  { nom: 'Normal',        eq: [0, 0, 0, 0, 0] },
+  voz:     { nom: 'Voz clara',     eq: [-5, -2, 2, 5, 2] },
+  graves:  { nom: 'Más graves',    eq: [6, 3, 0, -1, 0] },
+  suave:   { nom: 'Suave',         eq: [2, 1, 0, -4, -7] },
+  altavoz: { nom: 'Altavoz móvil', eq: [-8, -3, 2, 4, 3] },
+  noche:   { nom: 'Noche',         eq: [-6, -2, 1, 2, -3] }
+};
+// ¿Deja este aparato cambiar el volumen directamente? (el iPhone no)
+const volNativo = (() => { try { const a = document.createElement('audio'); a.volume = 0.5; return a.volume === 0.5; } catch (e) { return false; } })();
+
+let actx = null, nodos = null;
+function necesitaProcesador() {
+  return ajustes.eq.some(g => g !== 0) || ajustes.compresor || ajustes.vol > 1 || (ajustes.vol < 1 && !volNativo);
+}
+function crearProcesador() {
+  if (actx) return true;
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return false;
+  try {
+    actx = new AC();
+    const fuente = actx.createMediaElementSource(audio);
+    const filtros = BANDAS.map((b, i) => {
+      const f = actx.createBiquadFilter();
+      f.type = i === 0 ? 'lowshelf' : i === BANDAS.length - 1 ? 'highshelf' : 'peaking';
+      f.frequency.value = b.f;
+      if (f.type === 'peaking') f.Q.value = 0.9;
+      return f;
+    });
+    const comp = actx.createDynamicsCompressor();
+    const gan = actx.createGain();
+    let n = fuente;
+    for (const f of filtros) { n.connect(f); n = f; }
+    n.connect(comp); comp.connect(gan); gan.connect(actx.destination);
+    nodos = { filtros, comp, gan };
+    if (!leerJSON('avisoProcesador')) {
+      guardarJSON('avisoProcesador', true);
+      aviso('Sonido mejorado activado. Si al bloquear el iPhone se para, pulsa «Restablecer» en Sonido.', 6000);
+    }
+    return true;
+  } catch (e) { actx = null; nodos = null; return false; }
+}
+function aplicarSonido() {
+  if (nodos) {
+    ajustes.eq.forEach((g, i) => { nodos.filtros[i].gain.value = g; });
+    const c = nodos.comp;
+    if (ajustes.compresor) { c.threshold.value = -32; c.knee.value = 18; c.ratio.value = 6; c.attack.value = 0.005; c.release.value = 0.3; }
+    else { c.threshold.value = 0; c.knee.value = 0; c.ratio.value = 1; }
+    nodos.gan.gain.value = ajustes.vol * (ajustes.compresor ? 2 : 1);
+    audio.volume = 1;
+  } else if (volNativo && audio) audio.volume = Math.min(1, ajustes.vol);
+}
+// Se llama al tocar (play o un control de sonido): el iPhone solo deja encender el procesador con un toque
+function prepararSonido() {
+  if (necesitaProcesador() && !actx) crearProcesador();
+  if (actx && actx.state !== 'running') actx.resume().catch(() => {});
+  aplicarSonido();
+}
+// Si todo vuelve a "normal", quitamos el procesador para que suene siempre con la pantalla bloqueada
+function volverAudioDirecto() {
+  if (!actx) return;
+  const t = posicionActual(), sonaba = !audio.paused, vieja = audio;
+  for (const [ev, fn] of Object.entries(EVENTOS)) vieja.removeEventListener(ev, fn);
+  vieja.pause(); vieja.removeAttribute('src'); try { vieja.load(); } catch (e) {}
+  vieja.remove();
+  try { actx.close(); } catch (e) {}
+  actx = null; nodos = null;
+  audio = crearAudio();
+  if (libro && urlAudio) {
+    audio.src = urlAudio;
+    posPendiente = t > 0 ? t : null; objetivo = null;
+    audio.load();
+    audio.playbackRate = libro.velocidad || 1;
+    if (sonaba) audio.play().catch(() => {});
+  }
+  aplicarSonido();
+  pintarBotonPlay();
+}
+function cambioSonido() {
+  guardarAjustes();
+  if (necesitaProcesador()) prepararSonido();
+  else if (actx) volverAudioDirecto();
+  else aplicarSonido();
+  pintarSonido();
+}
+function pintarSonido() {
+  const v = Math.round(ajustes.vol * 100);
+  for (const id of ['#volRep', '#volSon']) { const r = $(id); r.value = v; rellenar(r); }
+  $('#volTxt').textContent = v + ' %';
+  $('#volSonTxt').textContent = v + ' %';
+  document.querySelectorAll('#chipsEq .chip').forEach(c => c.classList.toggle('on', c.dataset.p === ajustes.preset));
+  document.querySelectorAll('#bandas .banda').forEach((fila, i) => {
+    const r = fila.querySelector('input');
+    r.value = ajustes.eq[i]; rellenar(r);
+    fila.querySelector('b').textContent = (ajustes.eq[i] > 0 ? '+' : '') + ajustes.eq[i] + ' dB';
+  });
+  $('#chkComp').checked = ajustes.compresor;
+  $('#btnSonido').classList.toggle('activo', necesitaProcesador());
+}
+(function montarSonido() {
+  const chips = $('#chipsEq');
+  for (const [k, p] of Object.entries(PRESETS)) {
+    const b = document.createElement('button'); b.className = 'chip'; b.dataset.p = k; b.textContent = p.nom;
+    b.onclick = () => { ajustes.preset = k; ajustes.eq = p.eq.slice(); cambioSonido(); };
+    chips.appendChild(b);
+  }
+  const bp = document.createElement('button'); bp.className = 'chip'; bp.dataset.p = 'personal'; bp.textContent = 'Personalizado';
+  bp.onclick = () => { ajustes.preset = 'personal'; cambioSonido(); };
+  chips.appendChild(bp);
+  const cont = $('#bandas');
+  BANDAS.forEach((b, i) => {
+    const fila = document.createElement('div'); fila.className = 'banda';
+    fila.innerHTML = `<span>${b.nom}<small>${b.sub}</small></span><input type="range" class="rango" min="-12" max="12" step="1"><b></b>`;
+    fila.querySelector('input').addEventListener('input', e => {
+      ajustes.eq[i] = +e.target.value; ajustes.preset = 'personal'; cambioSonido();
+    });
+    cont.appendChild(fila);
+  });
+})();
+for (const id of ['#volRep', '#volSon']) {
+  $(id).addEventListener('input', e => {
+    let v = +e.target.value;
+    if (Math.abs(v - 100) <= 5) v = 100;              // se "engancha" en el 100 %
+    ajustes.vol = v / 100;
+    cambioSonido();
+  });
+}
+$('#chkComp').onchange = e => { ajustes.compresor = e.target.checked; cambioSonido(); };
+$('#btnSonReset').onclick = () => {
+  Object.assign(ajustes, { eq: [0, 0, 0, 0, 0], preset: 'normal', vol: 1, compresor: false });
+  cambioSonido();
+  aviso('Sonido original');
+};
+$('#btnSonido').onclick = () => { pintarSonido(); abrirHoja('#hojaSonido'); };
+
+/* =====================================================================
+   12. PINTAR EL REPRODUCTOR
    ===================================================================== */
 function pintarReproductor() {
   if (!libro) return;
@@ -1221,12 +1545,21 @@ function pintarReproductor() {
   const c = libro.capitulos[libro.cap];
   $('#repCap').textContent = libro.terminado ? '¡Libro terminado! Pulsa ▶ para volver a empezar'
     : (libro.capitulos.length > 1 ? `Parte ${libro.cap + 1} de ${libro.capitulos.length} · ${c.nombre}` : c.nombre);
-  $('#btnVel').textContent = velTexto(libro.velocidad || 1);
+  $('#velTxt').textContent = fmtVelCorto(libro.velocidad || 1);
+  $('#btnVel').classList.toggle('activo', (libro.velocidad || 1) !== 1);
   $('#btnAnt').disabled = libro.cap === 0;
   $('#btnSig').disabled = libro.cap >= libro.capitulos.length - 1;
+  pintarSaltos();
   pintarTiempo();
   pintarBotonPlay();
+  pintarSonido();
   pintarMini();
+}
+function pintarSaltos() {
+  $('#txtAtras').textContent = ajustes.atras;
+  $('#txtAdelante').textContent = ajustes.adelante;
+  $('#btnAtras').setAttribute('aria-label', `Atrás ${ajustes.atras} segundos`);
+  $('#btnAdelante').setAttribute('aria-label', `Adelante ${ajustes.adelante} segundos`);
 }
 function pintarTiempo() {
   if (!libro) return;
@@ -1236,9 +1569,10 @@ function pintarTiempo() {
   if (!arrastrando) s.value = Math.floor(p);
   s.style.setProperty('--p', (d ? p / d * 100 : 0) + '%');
   $('#tAct').textContent = fmt(p);
-  $('#tRest').textContent = '-' + fmt(Math.max(0, d - p));
+  const vel = libro.velocidad || 1;             // el tiempo que queda tiene en cuenta la velocidad
+  $('#tRest').textContent = '-' + fmt(Math.max(0, d - p) / vel);
   const total = totalLibro(libro), pc = porcentaje(libro, p);
-  const queda = fmtLargo(total - escuchado(libro, p));
+  const queda = fmtLargo((total - escuchado(libro, p)) / vel);
   $('#repTotal').textContent = total ? `Quedan ${queda} del libro · ${pc} %` : '';
   $('#miniBarra').style.width = pc + '%';
   $('#heroBarra').style.width = pc + '%';
@@ -1262,7 +1596,6 @@ function pintarMini() {
   const img = $('#miniImg'); img.innerHTML = ''; img.appendChild(elPortada(libro, true));
   $('#miniTit').textContent = libro.titulo;
 }
-// El mini reproductor solo aparece cuando la tarjeta "Continuar" no se ve
 if ('IntersectionObserver' in window)
   new IntersectionObserver(e => { heroVisible = e[0].isIntersecting; pintarMini(); }).observe($('#continuar'));
 
@@ -1275,15 +1608,36 @@ function abrirReproductor() {
 function cerrarReproductor() {
   $('#reproductor').classList.remove('abierto');
   document.body.classList.remove('bloqueado');
-  pintarBiblioteca(); pintarContinuar(); pintarMini();
+  pintarBiblioteca(); pintarContinuar(); pintarMini(); mostrarEstadis();
 }
+
+// Deslizar el reproductor hacia abajo para cerrarlo
+(function deslizarParaCerrar() {
+  const rep = $('#reproductor');
+  let y0 = null, dy = 0;
+  rep.addEventListener('touchstart', e => {
+    if (rep.scrollTop > 0 || e.target.closest('input,.controles,.herramientas,.vol-fila')) { y0 = null; return; }
+    y0 = e.touches[0].clientY; dy = 0; rep.style.transition = 'none';
+  }, { passive: true });
+  rep.addEventListener('touchmove', e => {
+    if (y0 == null) return;
+    dy = Math.max(0, e.touches[0].clientY - y0);
+    rep.style.transform = dy ? `translateY(${dy}px)` : '';
+  }, { passive: true });
+  rep.addEventListener('touchend', () => {
+    if (y0 == null) return;
+    rep.style.transition = ''; rep.style.transform = '';
+    if (dy > 110) cerrarReproductor();
+    y0 = null;
+  });
+})();
 
 $('#btnPlay').onclick = alternar;
 $('#miniPlay').onclick = e => { e.stopPropagation(); alternar(); };
 $('#mini').onclick = () => abrirReproductor();
 $('#btnCerrarRep').onclick = cerrarReproductor;
-$('#btnAtras').onclick = () => saltarA(posicionActual() - 15);
-$('#btnAdelante').onclick = () => saltarA(posicionActual() + 30);
+$('#btnAtras').onclick = () => saltarA(posicionActual() - ajustes.atras);
+$('#btnAdelante').onclick = () => saltarA(posicionActual() + ajustes.adelante);
 $('#btnAnt').onclick = () => irCapitulo(libro.cap - 1, !audio.paused);
 $('#btnSig').onclick = () => irCapitulo(libro.cap + 1, !audio.paused);
 
@@ -1297,23 +1651,45 @@ slider.addEventListener('input', () => {
 });
 slider.addEventListener('change', () => { arrastrando = false; saltarA(+slider.value); });
 
-const VELOCIDADES = [0.75, 1, 1.25, 1.5, 1.75, 2];
-const velTexto = v => String(v).replace('.', ',') + '×';
-$('#btnVel').onclick = () => {
-  if (!libro) return;
-  const i = VELOCIDADES.indexOf(libro.velocidad || 1);
-  libro.velocidad = VELOCIDADES[(i + 1) % VELOCIDADES.length];
-  audio.playbackRate = libro.velocidad;
-  $('#btnVel').textContent = velTexto(libro.velocidad);
-  guardarPos(true);
-};
+// En el ordenador: espacio = play/pausa, flechas = saltos
+document.addEventListener('keydown', e => {
+  if (!libro || e.target.closest('input')) return;
+  if (e.code === 'Space') { e.preventDefault(); alternar(); }
+  else if (e.code === 'ArrowLeft') saltarA(posicionActual() - ajustes.atras);
+  else if (e.code === 'ArrowRight') saltarA(posicionActual() + ajustes.adelante);
+});
 
+/* ---- Velocidad ---- */
+const VEL_RAPIDAS = [0.75, 0.9, 1, 1.1, 1.25, 1.5, 1.75, 2];
+function ponerVelocidad(v) {
+  if (!libro) return;
+  libro.velocidad = Math.round(Math.min(3, Math.max(0.5, v)) * 100) / 100;
+  audio.playbackRate = libro.velocidad;
+  $('#velValor').textContent = fmtVel(libro.velocidad);
+  document.querySelectorAll('#chipsVel .chip').forEach(c => c.classList.toggle('on', +c.dataset.v === libro.velocidad));
+  $('#velTxt').textContent = fmtVelCorto(libro.velocidad);
+  $('#btnVel').classList.toggle('activo', libro.velocidad !== 1);
+  pintarTiempo();
+  guardarPos(true);
+}
+for (const v of VEL_RAPIDAS) {
+  const b = document.createElement('button'); b.className = 'chip'; b.dataset.v = v; b.textContent = fmtVelCorto(v);
+  b.onclick = () => ponerVelocidad(v);
+  $('#chipsVel').appendChild(b);
+}
+$('#velMenos').onclick = () => ponerVelocidad((libro.velocidad || 1) - 0.05);
+$('#velMas').onclick = () => ponerVelocidad((libro.velocidad || 1) + 0.05);
+$('#btnVel').onclick = () => { ponerVelocidad(libro.velocidad || 1); abrirHoja('#hojaVel'); };
+
+/* ---- Capítulos ---- */
 $('#btnCapitulos').onclick = () => {
   const cont = $('#listaCapitulos'); cont.innerHTML = '';
   libro.capitulos.forEach((c, i) => {
+    const hecho = i < libro.cap || libro.terminado;
     const b = document.createElement('button');
-    b.className = 'opcion' + (i === libro.cap ? ' actual' : '');
-    const n = document.createElement('span'); n.className = 'nom'; n.textContent = `${i + 1}. ${c.nombre}`;
+    b.className = 'opcion' + (i === libro.cap ? ' actual' : '') + (hecho ? ' hecho' : '');
+    const n = document.createElement('span'); n.className = 'nom';
+    n.textContent = (hecho ? '✓ ' : i === libro.cap ? '▶ ' : '') + `${i + 1}. ${c.nombre}`;
     const d = document.createElement('small'); d.textContent = c.duracion ? fmt(c.duracion) : '';
     b.append(n, d);
     b.onclick = () => { cerrarHoja('#hojaCapitulos'); if (i !== libro.cap) irCapitulo(i, true); };
@@ -1323,6 +1699,7 @@ $('#btnCapitulos').onclick = () => {
   const act = cont.querySelector('.actual'); if (act) act.scrollIntoView({ block: 'center' });
 };
 
+/* ---- Temporizador para dormir ---- */
 $('#btnDormir').onclick = () => abrirHoja('#hojaDormir');
 document.querySelectorAll('#hojaDormir .opcion').forEach(b => b.onclick = () => {
   const v = b.dataset.min;
@@ -1331,6 +1708,7 @@ document.querySelectorAll('#hojaDormir .opcion').forEach(b => b.onclick = () => 
   else if (+v > 0) finTemporizador = Date.now() + v * 60000;
   pintarTemporizador();
   cerrarHoja('#hojaDormir');
+  if (v !== '0') aviso(v === 'cap' ? 'Se parará al acabar esta parte' : `Se parará dentro de ${v} min`);
 });
 function quitarTemporizador() { finTemporizador = 0; temporizadorCap = false; pintarTemporizador(); }
 function comprobarTemporizador() {
@@ -1338,14 +1716,86 @@ function comprobarTemporizador() {
   else if (finTemporizador) pintarTemporizador();
 }
 function pintarTemporizador() {
-  const b = $('#btnDormir');
-  if (temporizadorCap) { b.textContent = '🌙 Fin de parte'; b.classList.add('activo'); }
-  else if (finTemporizador) { b.textContent = '🌙 ' + Math.ceil((finTemporizador - Date.now()) / 60000) + ' min'; b.classList.add('activo'); }
-  else { b.textContent = '🌙 Dormir'; b.classList.remove('activo'); }
+  const b = $('#btnDormir'), t = $('#dormirTxt');
+  if (temporizadorCap) { t.textContent = 'Fin de parte'; b.classList.add('activo'); }
+  else if (finTemporizador) { t.textContent = Math.ceil((finTemporizador - Date.now()) / 60000) + ' min'; b.classList.add('activo'); }
+  else { t.textContent = 'Dormir'; b.classList.remove('activo'); }
 }
 
+/* ---- Marcadores ---- */
+function pintarMarcas() {
+  const cont = $('#listaMarcas'); cont.innerHTML = '';
+  const lista = (libro.marcadores || []).slice().sort((a, b) => a.cap - b.cap || a.pos - b.pos);
+  if (!lista.length) { cont.innerHTML = '<div class="vacio-hoja">Aún no hay marcadores.<br>Pulsa «＋ Marcar» para guardar el punto donde vas.</div>'; return; }
+  for (const m of lista) {
+    const fila = document.createElement('div'); fila.className = 'marca';
+    const ir = document.createElement('button'); ir.className = 'ir';
+    const t = document.createElement('b');
+    t.textContent = (libro.capitulos.length > 1 ? `Parte ${m.cap + 1} · ` : '') + fmt(m.pos);
+    const n = document.createElement('span');
+    n.textContent = m.nota || new Date(m.t).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+    ir.append(t, n);
+    ir.onclick = async () => {
+      cerrarHoja('#hojaMarcas');
+      if (m.cap !== libro.cap) await cargarCapitulo(m.cap, m.pos, !audio.paused);
+      else saltarA(m.pos);
+    };
+    const q = document.createElement('button'); q.className = 'quitar'; q.textContent = '✕'; q.setAttribute('aria-label', 'Borrar marcador');
+    q.onclick = () => { libro.marcadores = libro.marcadores.filter(x => x !== m); guardarPos(true); pintarMarcas(); };
+    fila.append(ir, q);
+    cont.appendChild(fila);
+  }
+}
+$('#btnMarcas').onclick = () => { $('#notaMarca').value = ''; pintarMarcas(); abrirHoja('#hojaMarcas'); };
+$('#btnAddMarca').onclick = () => {
+  if (!libro.marcadores) libro.marcadores = [];
+  libro.marcadores.push({ cap: libro.cap, pos: posicionActual(), nota: $('#notaMarca').value.trim(), t: Date.now() });
+  $('#notaMarca').value = '';
+  guardarPos(true);
+  pintarMarcas();
+  aviso('🔖 Marcador guardado');
+};
+
+/* ---- Ajustes ---- */
+function montarChips(sel, valores, clave, texto) {
+  const c = $(sel); c.innerHTML = '';
+  for (const v of valores) {
+    const b = document.createElement('button'); b.className = 'chip' + (ajustes[clave] === v ? ' on' : '');
+    b.textContent = texto(v);
+    b.onclick = () => { ajustes[clave] = v; guardarAjustes(); montarChips(sel, valores, clave, texto); pintarSaltos(); };
+    c.appendChild(b);
+  }
+}
+$('#btnAjustes').onclick = async () => {
+  montarChips('#chipsAtras', [5, 10, 15, 30, 60], 'atras', v => v + ' s');
+  montarChips('#chipsAdelante', [10, 15, 30, 60, 120], 'adelante', v => v < 60 ? v + ' s' : v / 60 + ' min');
+  montarChips('#chipsRebobinar', [0, 3, 5, 10, 30], 'rebobinar', v => v ? v + ' s' : 'No');
+  let espacio = '—';
+  try { if (navigator.storage && navigator.storage.estimate) espacio = fmtMB((await navigator.storage.estimate()).usage || 0); } catch (e) {}
+  const terminados = libros.filter(l => l.terminado).length;
+  $('#datos').innerHTML = '';
+  for (const [v, t] of [[libros.length, 'libros'], [terminados, 'terminados'],
+                        [fmtLargo(tiempoEscuchadoTotal()), 'escuchado en total'], [espacio, 'ocupado en el aparato']]) {
+    const d = document.createElement('div'); d.className = 'dato';
+    const b = document.createElement('b'); b.textContent = v;
+    const s = document.createElement('span'); s.textContent = t;
+    d.append(b, s); $('#datos').appendChild(d);
+  }
+  abrirHoja('#hojaAjustes');
+};
+$('#btnFaltan').onclick = async () => {
+  if (!navigator.onLine) { aviso('No hay conexión a internet'); return; }
+  const faltan = libros.filter(l => !l.portada && !l.portadaUrl).length;
+  if (!faltan) { aviso('Todos los libros tienen carátula ✓'); return; }
+  cerrarHoja('#hojaAjustes');
+  mostrarCargando(`Buscando ${faltan} carátula(s)…`);
+  const n = await completarCaratulas(true);
+  ocultarCargando();
+  aviso(n ? `Encontradas ${n} de ${faltan}` : 'No se encontró ninguna. Prueba a buscarlas a mano con ⋯');
+};
+
 /* =====================================================================
-   11. PANTALLA DE BLOQUEO Y CENTRO DE CONTROL
+   13. PANTALLA DE BLOQUEO Y CENTRO DE CONTROL
    ===================================================================== */
 function ponerMetadatos() {
   if (!('mediaSession' in navigator) || !libro) return;
@@ -1369,15 +1819,15 @@ function actualizarPosicionMS() {
 }
 if ('mediaSession' in navigator) {
   const h = (accion, fn) => { try { navigator.mediaSession.setActionHandler(accion, fn); } catch (e) {} };
-  h('play',  () => audio.play());
+  h('play',  () => { if (actx && actx.state !== 'running') actx.resume().catch(() => {}); audio.play(); });
   h('pause', () => audio.pause());
-  h('seekbackward', d => saltarA(posicionActual() - ((d && d.seekOffset) || 15)));
-  h('seekforward',  d => saltarA(posicionActual() + ((d && d.seekOffset) || 30)));
+  h('seekbackward', d => saltarA(posicionActual() - ((d && d.seekOffset) || ajustes.atras)));
+  h('seekforward',  d => saltarA(posicionActual() + ((d && d.seekOffset) || ajustes.adelante)));
   h('seekto', d => { if (d && d.seekTime != null) saltarA(d.seekTime); });
 }
 
 /* =====================================================================
-   12. HOJAS Y AVISOS
+   14. HOJAS Y AVISOS
    ===================================================================== */
 function abrirHoja(sel) { $(sel).classList.add('abierta'); }
 function cerrarHoja(sel) { $(sel).classList.remove('abierta'); }
@@ -1387,10 +1837,14 @@ function mostrarCargando(txt) { $('#cargandoTxt').textContent = txt; $('#cargand
 function ocultarCargando() { $('#cargando').style.display = 'none'; }
 
 /* =====================================================================
-   13. ARRANQUE
+   15. ARRANQUE
    ===================================================================== */
+audio = crearAudio();
 (async function arrancar() {
   pintarBotonPlay();
+  pintarSaltos();
+  pintarSonido();
+  aplicarSonido();
   try {
     await abrirDB();
     await cargarBiblioteca();
