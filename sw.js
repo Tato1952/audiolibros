@@ -1,25 +1,44 @@
-// Guarda la app en el iPhone para que funcione sin conexión.
-// Si cambias index.html, sube el número de versión (v2, v3…) para que se actualice.
-const VERSION = 'audiolibros-v3';
-const ARCHIVOS = ['./', './index.html', './manifest.webmanifest', './icon-180.png', './icon-512.png'];
+/* Service worker de Mis Audiolibros
+   - La página (index.html) se pide primero a internet: así siempre llega la versión nueva.
+   - Si no hay internet, se usa la copia guardada: la app funciona sin conexión.
+   - Iconos y manifiesto se sirven desde la copia guardada. */
+const CACHE = 'audiolibros-v5';
+const ARCHIVOS = ['./', 'index.html', 'manifest.webmanifest', 'icon-180.png', 'icon-512.png'];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(VERSION).then(c => c.addAll(ARCHIVOS)));
+  e.waitUntil(caches.open(CACHE).then(c => Promise.all(ARCHIVOS.map(u => c.add(u).catch(() => {})))));
   self.skipWaiting();
 });
 
 self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== VERSION).map(k => caches.delete(k)))));
-  self.clients.claim();
+  e.waitUntil(
+    caches.keys()
+      .then(claves => Promise.all(claves.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
+  );
 });
 
-// Primero intenta internet (para recibir mejoras); si no hay, usa la copia guardada
 self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
-  if (new URL(e.request.url).origin !== location.origin) return;
+  const r = e.request;
+  if (r.method !== 'GET') return;
+  const u = new URL(r.url);
+  if (u.origin !== location.origin) return;          // carátulas de internet: no se tocan
+
+  const esPagina = r.mode === 'navigate' || u.pathname.endsWith('/') || u.pathname.endsWith('.html');
+  if (esPagina) {
+    e.respondWith(
+      fetch(r).then(resp => {
+        const copia = resp.clone();
+        caches.open(CACHE).then(c => c.put(r, copia));
+        return resp;
+      }).catch(() => caches.match(r).then(x => x || caches.match('index.html')))
+    );
+    return;
+  }
   e.respondWith(
-    fetch(e.request)
-      .then(r => { const copia = r.clone(); caches.open(VERSION).then(c => c.put(e.request, copia)); return r; })
-      .catch(() => caches.match(e.request).then(r => r || caches.match('./index.html')))
+    caches.match(r).then(x => x || fetch(r).then(resp => {
+      if (resp.ok) { const copia = resp.clone(); caches.open(CACHE).then(c => c.put(r, copia)); }
+      return resp;
+    }))
   );
 });
